@@ -15,8 +15,7 @@ export const SKILLS = [
       skills: [
         { skill: "Node.js", percentage: "60%" },
         { skill: "Express", percentage: "50%" },
-        { skill: "MongoDB", percentage: "70%" },
-        { skill: "GraphQL", percentage: "40%" }
+        { skill: "MongoDB", percentage: "70%" }
       ]
     },
     {
@@ -24,19 +23,14 @@ export const SKILLS = [
       icons: "databaseIcon.png",
       skills: [
         { skill: "MySQL", percentage: "80%" },
-        { skill: "PostgreSQL", percentage: "70%" },
-        { skill: "MongoDB", percentage: "70%" },
-        { skill: "Redis", percentage: "50%" }
+        { skill: "MongoDB", percentage: "70%" }
       ]
     },
     {
       title: "Testing",
       icons: "testingIcon.png",
       skills: [
-        { skill: "Jest", percentage: "60%" },
-        { skill: "Enzyme", percentage: "50%" },
-        { skill: "Cypress", percentage: "70%" },
-        { skill: "Mocha", percentage: "40%" }
+        { skill: "Katalon Studio", percentage: "100%" },
       ]
     },
     {
