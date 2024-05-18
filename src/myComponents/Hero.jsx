@@ -3,7 +3,6 @@ import './/Hero.css'
 import boyimg from '..//assets/coolBoy.jpg';
 import reactimg from '..//assets/React.png';
 import css from '..//assets//css.png';
-import figma from '..//assets/Figma.png';
 import html from '..//assets//HTML.png';
 import js from '..//assets/Javascript.png';
 

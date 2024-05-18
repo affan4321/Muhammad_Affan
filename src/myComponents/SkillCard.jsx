@@ -12,7 +12,7 @@ function SkillCard({ title, iconURL, skills, Active, onClick }) {
   return (
     <>
       <div className={`skill-card ${isExpanded? "active" : ""}`} onClick={handleClick}>
-        <img src={require(`../assets/images/${iconURL}`)} alt={title} className='skill-icon' style={{ width: '80px', height: '80px' }} />
+        <img src={require(`../assets/images/${iconURL}`)} alt={title} className='skill-icon' />
         <h6 className='skill-title'>{title}</h6>
         <ul className='skill-list'>
           {isExpanded &&

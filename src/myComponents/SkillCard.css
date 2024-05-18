@@ -21,9 +21,10 @@
 }
 
 .skill-icon{
-    width: 4rem;
-    height: 4rem;
+    width: 5rem;
+    height: auto;
     display: flex;
+    object-fit:contain;
     align-items: center;
     border-radius: 2rem;
     border: #6751b9 5px solid;
@@ -31,11 +32,7 @@
     top: -1rem;
     left: -1rem;
 }
-.skill-icon img{
-    width: 2.4rem;
-    height: auto;
-    object-fit: contain;
-}
+
 
 @media (max-width: 1025){
     .skill-card{
