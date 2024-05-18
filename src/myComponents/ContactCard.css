@@ -29,3 +29,10 @@
     border: 1.5px solid #6751b9;
     margin-right: 2.5rem;
 }
+
+@media screen and (max-width: 425px){
+    p{
+        text-overflow: inherit;
+        word-wrap: anywhere;
+    }
+}

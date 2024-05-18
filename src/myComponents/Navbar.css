@@ -1,5 +1,5 @@
-.nav-wrapper{
-    background:rgba(0,0,0,0.1);
+.nav-wrapper {
+    background: rgba(0, 0, 0, 0.1);
     padding: 0.5rem 0;
     position: sticky;
     top: 0;
@@ -8,7 +8,6 @@
 }
 
 .nav-content {
-    max-width: 1000px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -16,24 +15,24 @@
     margin: 0 auto;
 }
 
-.logo{
+.logo {
     width: 10rem;
     height: auto;
     border-radius: 2rem;
     box-shadow: 0 0 1rem rgb(23, 204, 224);
 }
 
-.nav-content ul{
+.nav-links ul {
     display: flex;
     align-items: center;
     list-style: none;
 }
 
-.nav-content li{
+.nav-links li {
     margin: 0 1.5rem;
 }
 
-.menu-item{
+.menu-item {
     text-decoration: none;
     font-size: 0.9rem;
     font-weight: 500;
@@ -42,10 +41,10 @@
     color: white;
 }
 
-.menu-item:hover::before{
+.menu-item:hover::before {
     content: " ";
     width: 2rem;
-    height: linear-grdient(90deg, #a993fe 0%, #7e61e7 100%);
+    height: linear-gradient(90deg, #a993fe 0%, #7e61e7 100%);
     border-radius: 0.5rem;
     position: absolute;
     bottom: -0.6rem;
@@ -54,7 +53,7 @@
     transition: all 0.3s ease;
 }
 
-.contact-btn{
+.contact-btn {
     font-size: 0.9rem;
     height: 2.2rem;
     font-weight: 500;
@@ -62,16 +61,71 @@
     align-items: center;
     justify-content: center;
     color: white;
-    background: linear-gradient(90deg, #a993fe 0%, #7e61e7 100% );
+    background: linear-gradient(90deg, #a993fe 0%, #7e61e7 100%);
     padding: 0.6rem 2rem;
     cursor: pointer;
     outline: 1.5px solid transparent;
     border-radius: 0.2rem;
-    transition: all 0.3 ease;
+    transition: all 0.3s ease;
 }
 
-.contact-btn:hover{
-    color:#a993fe ;
+.contact-btn:hover {
+    color: #a993fe;
     background: black;
     outline: 1.5px solid #a993fe;
+}
+
+.hamburger-menu {
+    display: none;
+}
+
+@media screen and (max-width: 3500px) {
+    .nav-links {
+        display: flex;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .nav-links {
+        display: none;
+    }
+
+    .hamburger-menu {
+        display: block;
+    }
+
+    .hamburger-menu summary {
+        cursor: pointer;
+        list-style: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .hamburger-menu summary::-webkit-details-marker {
+        display: none;
+    }
+
+    .hamburger-menu summary::marker {
+        display: none;
+    }
+
+    .hamburger-menu ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .hamburger-menu li {
+        margin: 0.5rem 0;
+    }
+}
+
+@media screen and (max-width: 425px) {
+    .hamburger-menu {
+        display: block;
+    }
+
+    .hamburger-menu ul {
+        flex-direction: column;
+    }
 }
