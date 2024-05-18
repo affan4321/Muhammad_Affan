@@ -14,7 +14,7 @@ function Hero() {
         <div className="hero-content">
           <h1>Hi, I'm Muhammmad Affan.</h1>
           <p>
-            Passionate Frontend Developer &nbsp; | &nbsp; I love bringing ideas to life
+            Passionate Frontend Developer &nbsp; | &nbsp; Bringing ideas to life
           </p>
         </div>
 
