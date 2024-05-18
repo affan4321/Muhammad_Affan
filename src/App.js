@@ -1,24 +1,38 @@
-import logo from './logo.svg';
 import './App.css';
+import Navbar from './myComponents/Navbar';
+import Hero from './myComponents/Hero';
+import Skills from './myComponents/Skills';
+import WorkExperience from './myComponents/WorkExperience';
+import Contact from './myComponents/Contact';
+import Footer from "./myComponents/Footer";
+import { useRef } from 'react';
 
-function App() {
+const App = () => {
+  const sec1 = useRef(null);
+  const sec2 = useRef(null);
+  const sec3 = useRef(null);
+  const sec4 = useRef(null);
+
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Navbar scroll={{home: sec1, skills: sec2, exp: sec3, contact: sec4}} />
+      <div className="container">
+        <div ref={sec1}>
+          <Hero />
+        </div>
+        <div ref={sec2}>
+          <Skills />
+        </div>
+        <div ref={sec3}>
+          <WorkExperience />
+        </div>
+        <div ref={sec4}>
+          <Contact />
+        </div>
+      </div>
+      <Footer />
+    </>
   );
 }
 

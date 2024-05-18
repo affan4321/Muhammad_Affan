@@ -1,0 +1,88 @@
+.boy, .boy img{
+    width: auto;
+    height: 350px;
+    max-width: fit-content;
+}
+
+.hero-container{
+    display: flex;
+    align-items:center;
+    position: relative;
+}
+.hero-content{
+    flex: 1;
+}
+.hero-content h1{
+    font-size: 3rem;
+    font-weight: 900;
+    line-height: 5rem;
+    margin-bottom: 1rem;
+}
+.hero-content p{
+    width: 80%;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 2rem;
+}
+.hero-img{
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    margin-top: 5rem;
+}
+.hero-img > div{
+    display: flex;
+    align-items: flex-end;
+    gap: 2rem;
+}
+.hero-img > div > img{
+    width: 25rem;
+    transition: all 0.3s ease;
+}
+.boy img{
+    margin-top: 20px;
+    border-radius: 20rem;
+    border: 10px solid rgb(41, 2, 2);
+    box-shadow: 0 0 1rem rgb(59, 7, 52);
+}
+.tech-icon{
+    width: 5rem;
+    height: 5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border-radius: 2rem;
+    border: 1.5px solid #6852ba;
+}
+.tech-icon img{
+    width: 3rem;
+    height: auto;
+    transition: all 0.3s ease;
+}
+
+.tech-icon img:hover{
+    transform: scale(1.1);
+    cursor: pointer;
+}
+.boy img:hover{
+    box-shadow: 0 0 2rem rgb(240, 226, 238);
+    transform: scale(1.1);
+    transition: all 0.3s ease;
+    transition: all 0.3s ease-out;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 800px){
+    .hero-container{
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    .boy img{
+        width: 100%;
+        height: auto;
+      }
+}
