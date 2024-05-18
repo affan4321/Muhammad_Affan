@@ -6,3 +6,4 @@ I have used React.js and VsCode for the development and GitHub, Netlify for the 
 
 # How to access
 Just click on the link url down below to access the site.
+---->> https://affan4321.github.io/Muhammad_Affan/ <<----
