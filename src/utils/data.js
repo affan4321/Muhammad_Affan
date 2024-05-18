@@ -40,55 +40,12 @@ export const SKILLS = [
       ]
     },
     {
-      title: "DevOps",
-      icons: "devopsIcon.png",
-      skills: [
-        { skill: "Docker", percentage: "70%" },
-        { skill: "Kubernetes", percentage: "50%" },
-        { skill: "Jenkins", percentage: "60%" },
-        { skill: "GitLab CI/CD", percentage: "40%" }
-      ]
-    },
-    {
       title: "UI/UX",
       icons: "uiuxIcon.png",
       skills: [
         { skill: "Figma", percentage: "70%" },
-        { skill: "Sketch", percentage: "60%" },
-        { skill: "Adobe XD", percentage: "50%" },
-        { skill: "InVision", percentage: "40%" }
       ]
     },
-    {
-      title: "Machine Learning",
-      icons: "mlIcon.png",
-      skills: [
-        { skill: "TensorFlow", percentage: "50%" },
-        { skill: "PyTorch", percentage: "40%" },
-        { skill: "Scikit-learn", percentage: "60%" },
-        { skill: "Keras", percentage: "30%" }
-      ]
-    },
-    {
-      title: "Cloud Computing",
-      icons: "cloudIcon2.png",
-      skills: [
-        { skill: "AWS", percentage: "70%" },
-        { skill: "Azure", percentage: "60%" },
-        { skill: "Google Cloud", percentage: "50%" },
-        { skill: "Heroku", percentage: "40%" }
-      ]
-    },
-    {
-      title: "Security",
-      icons: "securityIcon.png",
-      skills: [
-        { skill: "OWASP", percentage: "60%" },
-        { skill: "SSL/TLS", percentage: "50%" },
-        { skill: "Firewalls", percentage: "40%" },
-        { skill: "Access Control", percentage: "30%" }
-      ]
-    }
   ]
 
 export const WORK_EXPERIENCE = [
