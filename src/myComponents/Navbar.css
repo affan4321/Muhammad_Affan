@@ -1,0 +1,123 @@
+.nav-wrapper{
+    background: rgba(0, 0, 0, 0.1);
+    padding: 0 20px;
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    backdrop-filter: blur(50px);
+}
+
+.HamburgerMenu {
+    display: none;
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+
+.nav-content {
+    max-width: 1000px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+    margin: 0 auto;
+}
+
+.logo{
+    width: 10rem;
+    height: auto;
+    border-radius: 2rem;
+    box-shadow: 0 0 1rem rgb(23, 204, 224);
+}
+
+.nav-menu {
+    display: flex;
+    align-items: center;
+    list-style: none;
+}
+
+.nav-menu li {
+    margin: 0 1.5rem;
+}
+
+.menu-item{
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    color: white;
+}
+
+.contact-btn{
+    font-size: 0.9rem;
+    height: 2.2rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    background: linear-gradient(90deg, #a993fe 0%, #7e61e7 100% );
+    padding: 0.6rem 2rem;
+    cursor: pointer;
+    outline: 1.5px solid transparent;
+    border-radius: 0.2rem;
+    transition: all 0.3 ease;
+}
+
+
+.contact-btn:hover{
+    color:#a993fe ;
+    background: black;
+    outline: 1.5px solid #a993fe;
+}
+
+
+@media screen and (max-width: 425px) {
+    .HamburgerMenu {
+      display: block;
+    }
+  
+    .nav-menu {
+      display: none; /* Hide menu on mobile by default */
+      position: absolute;
+      top: 100%;
+      right: 0;
+      background: rgba(0, 0, 0, 0.8);
+      width: 100%;
+      padding: 1rem;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+      flex-direction: column;
+      transition: opacity 0.5s ease-in-out;
+    }
+  
+    .show-menu {
+      display: flex;
+    }
+}
+  
+@media screen and (min-width: 426px) {
+    .HamburgerMenu {
+      display: none; /* Hide hamburger menu on larger screens */
+    }
+  
+    .nav-menu {
+      display: flex; /* Show menu on larger screens */
+    }
+}
+
+.menu-item:hover::before{
+    content: " ";
+    width: 2rem;
+    height: 0.2rem;
+    background: linear-gradient(90deg, #a993fe 0%, #7e61e7 100%);
+    border-radius: 0.5rem;
+    position: absolute;
+    bottom: 2.5rem;
+    opacity: 1;
+    transform: translateX(0);
+    transition: all 0.3s ease;
+}
+

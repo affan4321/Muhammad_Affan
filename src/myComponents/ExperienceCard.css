@@ -1,0 +1,29 @@
+.expcard-container{
+    margin: 4rem 0;
+    border-radius: 0.65rem;
+    border: 1.5px solid #6751b9;
+    padding: 2.5rem;
+    background: rgba(22,17,47,0.398);
+    backdrop-filter: blur(1rem);
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.expcard-container h6 {
+    font-weight: 1000;
+    text-align: center;
+    color:blueviolet;
+}
+
+.expcard-container h6:hover{
+    color:white;
+}
+
+.expcard-container h6:nth-child(2) {
+    margin-bottom: 2rem;
+}
+
+.expcard-container:hover {
+    background: linear-gradient(180deg, #aa94fe 0%, #7c5fe6 100%);
+}

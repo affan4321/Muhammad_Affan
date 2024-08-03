@@ -1,0 +1,30 @@
+.contact-container h5{
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 3.5rem;
+}
+
+.contact-content{
+    display: flex;
+    flex: 1;
+    justify-content:space-between;
+}
+
+@media screen and (max-width: 993px){
+    .contact-content{
+        flex-direction: column-reverse;
+        grid-gap: 2rem;
+        flex: 1;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 425px){
+    .HeadingContact{
+        text-align: center;
+    }
+    .Ccard{
+        margin: 0 3rem 0;
+        display: flex;
+    }
+}

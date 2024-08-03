@@ -1,0 +1,34 @@
+.skills-container{
+    margin: 15rem 0;
+    position: relative;
+
+}
+
+.skills-container h5{
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 3.5rem;
+}
+
+.skills-content{
+    display: flex;
+    align-items: flex-start;
+    gap: 2rem;
+}
+
+.skills{
+    flex: 1;
+    display: grid;
+    grid-gap: 2rem;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.skills-info{
+    flex: 1;
+}
+
+@media (max-width: 425px){
+    .HeadingSkills{
+        text-align: center;
+    }
+}

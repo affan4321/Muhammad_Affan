@@ -1,0 +1,56 @@
+.contactcard-icon {
+    width: 50px;
+    height: auto;
+    display: flex;
+    align-items: center;
+    border-radius: 2rem;
+    border: #6751b9 5px solid;
+    background: #6751b9;
+    position:relative;
+    object-fit: contain;
+    flex-shrink: 1;
+    top: -1rem;
+    left: -1rem;
+}
+
+.contactcard-container p {
+    margin-right: 1rem;
+    margin-top: 1rem;
+}
+
+.contactcard-container p a{
+    text-decoration: none;
+    color: white;
+}
+
+.contactcard-container {
+    width: 100%;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content:flex-start;
+    margin-bottom: 1.5rem;
+    background: #130f2a;
+    border-radius: 0.65rem;
+    border: 1.5px solid #6751b9;
+    margin-right: 2.5rem;
+}
+
+@media screen and (max-width: 425px){
+    p{
+        text-overflow: inherit;
+        word-wrap: anywhere;
+    }
+    .contactcard-container p{
+        display: none;
+        width: 0;
+    }
+    .contactcard-container img:hover{
+        margin-top: -1rem;
+    }
+    .contactcard-container{
+        width: 0;
+        height: 0rem;
+        margin: 2rem auto;
+    }
+}
