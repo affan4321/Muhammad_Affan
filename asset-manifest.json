@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/Muhammad_Affan/static/css/main.d7b1f6cb.css",
+    "main.js": "/Muhammad_Affan/static/js/main.73cce05b.js",
+    "static/media/coolBoy.jpg": "/Muhammad_Affan/static/media/coolBoy.258b17eeac43c9d38a21.jpg",
+    "static/media/React.png": "/Muhammad_Affan/static/media/React.2f2532db663fd5ec5f95.png",
+    "static/media/HTML.png": "/Muhammad_Affan/static/media/HTML.1d7b133e22ffe4829da6.png",
+    "static/media/css.png": "/Muhammad_Affan/static/media/css.9f33c557b92e4e2e1cc8.png",
+    "static/media/linkedin.png": "/Muhammad_Affan/static/media/linkedin.a680cb8ad2b88be03d17.png",
+    "static/media/transparent.png": "/Muhammad_Affan/static/media/transparent.6c9e97e58febaa496c9f.png",
+    "static/media/Javascript.png": "/Muhammad_Affan/static/media/Javascript.3cacb63905f322fb3541.png",
+    "static/media/databaseIcon.png": "/Muhammad_Affan/static/media/databaseIcon.c8533a9a777068e5e98c.png",
+    "static/media/email.png": "/Muhammad_Affan/static/media/email.edde96781f1253399d92.png",
+    "index.html": "/Muhammad_Affan/index.html",
+    "main.d7b1f6cb.css.map": "/Muhammad_Affan/static/css/main.d7b1f6cb.css.map",
+    "main.73cce05b.js.map": "/Muhammad_Affan/static/js/main.73cce05b.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.d7b1f6cb.css",
+    "static/js/main.73cce05b.js"
+  ]
+}
