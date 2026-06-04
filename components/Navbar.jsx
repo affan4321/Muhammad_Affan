@@ -16,10 +16,8 @@ const Navbar = ({ heroRef, skillsRef, workExperienceRef, contactRef }) => {
     <nav className="fixed top-0 left-0 right-0 bg-white/90 backdrop-blur-md shadow-lg z-50 transition-all duration-300">
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
         <div className="flex items-center gap-2">
-          <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
-            <span className="text-white font-bold text-xl">M</span>
-          </div>
-          <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent hidden sm:block">
+          <img src="/assets/latestFace.svg" alt="Logo" className="w-10 h-10 object-contain" />
+          <span className="text-xl font-bold text-[#2671b3] hidden sm:block">
             Muhammad Affan
           </span>
         </div>
