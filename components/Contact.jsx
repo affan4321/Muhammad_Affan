@@ -20,7 +20,7 @@ function Contact() {
                         url="mailto:affan4321@gmail.com"
                     />
                     <ContactCard 
-                        iconURL="/assets/Contact/linkedin.png"
+                        iconURL="/assets/Contact/linkedIn.png"
                         text="sheikhmuhammadaffan"
                         url="https://www.linkedin.com/in/sheikhmuhammadaffan"
                     />
