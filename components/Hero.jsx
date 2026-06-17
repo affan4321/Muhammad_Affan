@@ -37,54 +37,54 @@ function Hero({ workExperienceRef, contactRef }) {
         </div>
 
         <div className="flex justify-center items-center mt-16 relative w-full max-w-4xl mx-auto">
-          <div className="w-48 h-48 md:w-64 md:h-64 lg:w-80 lg:h-80 relative">
+          <div className="w-32 h-32 md:w-64 md:h-64 lg:w-80 lg:h-80 relative">
             <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full blur-3xl opacity-40 animate-pulse"></div>
             <img src="/assets/coolBoy.jpg" alt="Muhammad Affan" className="w-full h-full object-cover rounded-full border-4 border-white shadow-2xl relative z-10" />
           </div>
 
-          <div className="absolute top-4 -left-16 md:top-8 md:-left-24 lg:top-8 lg:-left-8 animate-float-1">
+          <div className="absolute top-2 left-3 sm:top-8 sm:-left-8 animate-float-1">
             <div className="w-8 h-8 md:w-12 md:h-12 lg:w-14 lg:h-14 bg-white rounded-2xl shadow-lg flex items-center justify-center transform hover:scale-110 transition-transform">
               <img src="/assets/React.png" alt="react" className="w-full h-full object-contain" />
             </div>
           </div>
 
-          <div className="absolute top-4 -left-16 md:top-8 md:-left-24 lg:top-[20rem] lg:-left-8 animate-float-1">
+          <div className="absolute top-20 left-10 sm:top-[20rem] sm:left-[-8rem] animate-float-1">
             <div className="w-8 h-8 md:w-12 md:h-12 lg:w-20 lg:h-20 bg-white rounded-2xl shadow-lg flex items-center justify-center transform hover:scale-110 transition-transform">
               <img src="/assets/premiere-pro.png" alt="premiere pro" className="w-full h-full object-contain" />
             </div>
           </div>
 
-          <div className="absolute top-4 -left-16 md:top-8 md:-left-24 lg:top-[15rem] lg:left-[10rem] animate-float-1">
+          <div className="absolute top-[10rem] sm:top-[15rem] left-[8rem] sm:left-[10rem] animate-float-1">
             <div className="w-8 h-8 md:w-12 md:h-12 lg:w-14 lg:h-14 bg-white rounded-2xl shadow-lg flex items-center justify-center transform hover:scale-110 transition-transform">
               <img src="/assets/illustrator.png" alt="illustrator" className="w-full h-full object-contain" />
             </div>
           </div>
 
-          <div className="absolute -top-12 right-4 md:-top-16 md:right-8 lg:-top-20 lg:right-12 animate-float-2">
+          <div className="absolute -top-4 sm:-top-20 sm:right-12 animate-float-2">
             <div className="w-12 h-12 md:w-16 md:h-16 lg:w-18 lg:h-18 bg-white rounded-2xl shadow-lg flex items-center justify-center transform hover:scale-110 transition-transform">
               <img src="/assets/css.png" alt="css" className="w-full h-full object-contain" />
             </div>
           </div>
           
-          <div className="absolute -top-12 right-4 md:-top-16 md:right-8 lg:top-20 lg:right-18 animate-float-2">
+          <div className="absolute top-4 right-2 sm:top-20 sm:right-18 animate-float-2">
             <div className="w-12 h-12 md:w-16 md:h-16 lg:w-18 lg:h-18 bg-white rounded-2xl shadow-lg flex items-center justify-center transform hover:scale-110 transition-transform">
               <img src="/assets/after-effects.png" alt="after effects" className="w-full h-full object-contain" />
             </div>
           </div>
 
-          <div className="absolute -top-12 right-4 md:-top-16 md:right-8 lg:-top-[2rem] lg:right-[20rem] animate-float-2">
+          <div className="absolute top-20 right-12 sm:-top-[2rem] sm:right-[20rem] animate-float-2">
             <div className="w-12 h-12 md:w-16 md:h-16 lg:w-18 lg:h-18 bg-white rounded-2xl shadow-lg flex items-center justify-center transform hover:scale-110 transition-transform">
               <img src="/assets/photoshop.png" alt="photoshop" className="w-full h-full object-contain" />
             </div>
           </div>
 
-          <div className="absolute top-1/2 -left-20 md:top-1/2 md:-left-28 lg:top-1/2 lg:-left-36 animate-float-3">
+          <div className="absolute top-40 left-10 sm:top-1/2 sm:-left-36 animate-float-3">
             <div className="w-10 h-10 md:w-14 md:h-14 lg:w-16 lg:h-16 bg-white rounded-2xl shadow-lg flex items-center justify-center transform hover:scale-110 transition-transform">
               <img src="/assets/HTML.png" alt="html" className="w-full h-full object-contain" />
             </div>
           </div>
 
-          <div className="absolute bottom-8 -right-12 md:bottom-12 md:-right-20 lg:bottom-16 lg:-right-28 animate-float-4">
+          <div className="absolute -bottom-0 right-0 sm:bottom-16 sm:right-28 animate-float-4">
             <div className="w-9 h-9 md:w-13 md:h-13 lg:w-15 lg:h-15 bg-white rounded-2xl shadow-lg flex items-center justify-center transform hover:scale-110 transition-transform">
               <img src="/assets/Javascript.png" alt="javascript" className="w-full h-full object-contain" />
             </div>

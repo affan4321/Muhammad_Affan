@@ -13,9 +13,11 @@
  * - CLOUDFLARE_R2_BUCKET: Bucket name (default: muhammad-affan-video-editing)
  */
 
+require('dotenv').config();
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
+const { getVideoDuration } = require('get-video-duration');
 const { S3Client, PutObjectCommand, ListObjectsV2Command, DeleteObjectCommand, DeleteObjectsCommand } = require('@aws-sdk/client-s3');
 
 // Configuration
@@ -147,13 +149,14 @@ function getContentType(filename) {
 function toTitleCase(str) {
   return str
     .replace(/[-_]/g, ' ')
+    .replace(/\//g, ' - ')
     .replace(/\b\w/g, char => char.toUpperCase());
 }
 
 /**
  * Auto-generate metadata.json if it doesn't exist
  */
-function generateMetadata(projectName, files) {
+async function generateMetadata(projectName, files, projectPath) {
   const videoFile = files.find(f => 
     f.endsWith('.mp4') || f.endsWith('.mov') || f.endsWith('.webm')
   );
@@ -165,11 +168,26 @@ function generateMetadata(projectName, files) {
     return null;
   }
 
+  // Fetch actual video duration
+  let duration = '00:00';
+  try {
+    const videoPath = path.join(projectPath, videoFile);
+    const durationInSeconds = await getVideoDuration(videoPath);
+    
+    // Convert seconds to MM:SS format
+    const minutes = Math.floor(durationInSeconds / 60);
+    const seconds = Math.floor(durationInSeconds % 60);
+    duration = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    console.log(`  ✓ Fetched video duration: ${duration}`);
+  } catch (error) {
+    console.log(`  ⚠️  Could not fetch video duration, using default: ${error.message}`);
+  }
+
   const metadata = {
     title: toTitleCase(projectName),
     description: `Video project: ${toTitleCase(projectName)}`,
     tags: ['video', 'production'],
-    duration: '00:00',
+    duration: duration,
     category: 'Creative'
   };
 
@@ -186,7 +204,44 @@ function saveMetadata(projectPath, metadata) {
 }
 
 /**
- * Get all local files in projects folder
+ * Recursively find all video files in a directory
+ */
+function findVideoFilesRecursively(dir, basePath = '') {
+  const videoProjects = [];
+  
+  if (!fs.existsSync(dir)) {
+    return videoProjects;
+  }
+
+  const items = fs.readdirSync(dir);
+  
+  for (const item of items) {
+    if (item.startsWith('.')) continue;
+    
+    const itemPath = path.join(dir, item);
+    const stats = fs.statSync(itemPath);
+    
+    if (stats.isDirectory()) {
+      // Recursively search subdirectories
+      const subProjects = findVideoFilesRecursively(itemPath, path.join(basePath, item));
+      videoProjects.push(...subProjects);
+    } else if (stats.isFile()) {
+      // Check if this is a video file
+      if (item.endsWith('.mp4') || item.endsWith('.mov') || item.endsWith('.webm')) {
+        videoProjects.push({
+          folder: basePath,
+          file: item,
+          fullPath: itemPath,
+        });
+      }
+    }
+  }
+
+  return videoProjects;
+}
+
+/**
+ * Get all local files in projects folder (recursive)
  */
 function getLocalFiles() {
   const localFiles = new Map();
@@ -195,22 +250,26 @@ function getLocalFiles() {
     return localFiles;
   }
 
-  const items = fs.readdirSync(VIDEO_PROJECTS_DIR);
-  const projectFolders = items.filter(item => {
-    const itemPath = path.join(VIDEO_PROJECTS_DIR, item);
-    return fs.statSync(itemPath).isDirectory() && !item.startsWith('.');
-  });
+  // Find all video files recursively
+  const videoProjects = findVideoFilesRecursively(VIDEO_PROJECTS_DIR);
+  
+  console.log(`Found ${videoProjects.length} video project(s) in nested structure.\n`);
 
-  for (const projectFolder of projectFolders) {
-    const projectPath = path.join(VIDEO_PROJECTS_DIR, projectFolder);
-    const files = fs.readdirSync(projectPath);
+  for (const project of videoProjects) {
+    const projectDir = path.join(VIDEO_PROJECTS_DIR, project.folder);
+    const files = fs.readdirSync(projectDir);
     
     for (const file of files) {
-      const filePath = path.join(projectPath, file);
+      // Skip system files
+      if (file === '.DS_Store' || file.startsWith('.')) {
+        continue;
+      }
+      
+      const filePath = path.join(projectDir, file);
       const stats = fs.statSync(filePath);
       
       if (stats.isFile()) {
-        const key = `${projectFolder}/${file}`;
+        const key = project.folder ? `${project.folder}/${file}` : file;
         localFiles.set(key, {
           path: filePath,
           hash: getFileHash(filePath),
@@ -242,7 +301,7 @@ async function processProject(projectName) {
   // Check for metadata.json, auto-generate if missing
   if (!files.includes(METADATA_FILE)) {
     console.log(`⚠️  Missing ${METADATA_FILE} in ${projectName}, auto-generating...`);
-    const autoMetadata = generateMetadata(projectName, files);
+    const autoMetadata = await generateMetadata(projectName, files, projectPath);
     
     if (!autoMetadata) {
       console.error(`✗ Cannot auto-generate metadata: missing video or thumbnail file`);
@@ -251,6 +310,10 @@ async function processProject(projectName) {
     
     saveMetadata(projectPath, autoMetadata);
     files.push(METADATA_FILE);
+    
+    // Upload the newly generated metadata.json
+    const contentType = getContentType(METADATA_FILE);
+    await uploadFile(`${projectName}/${METADATA_FILE}`, metadataPath, contentType);
   }
 
   // Read metadata
@@ -262,33 +325,7 @@ async function processProject(projectName) {
     return null;
   }
 
-  // Upload all files in the project folder
-  const uploadedFiles = [];
-  for (const file of files) {
-    const filePath = path.join(projectPath, file);
-    const stats = fs.statSync(filePath);
-    
-    if (stats.isFile()) {
-      const key = `${projectName}/${file}`;
-      const contentType = getContentType(file);
-      const success = await uploadFile(key, filePath, contentType);
-      
-      if (success) {
-        uploadedFiles.push({
-          key,
-          url: `https://videoassets.smaffan.com/${key}`,
-          contentType,
-        });
-      }
-    }
-  }
-
-  if (uploadedFiles.length === 0) {
-    console.error(`✗ No files uploaded for ${projectName}`);
-    return null;
-  }
-
-  // Return project data with URLs
+  // Return project data with URLs (files already uploaded in main sync)
   return {
     ...metadata,
     videoUrl: `https://videoassets.smaffan.com/${projectName}/${files.find(f => f.endsWith('.mp4') || f.endsWith('.mov') || f.endsWith('.webm'))}`,
@@ -378,6 +415,7 @@ async function main() {
   // Perform deletions
   if (filesToDelete.length > 0) {
     console.log(`\n🗑️  Deleting ${filesToDelete.length} file(s) from R2:`);
+    filesToDelete.forEach(key => console.log(`  - ${key}`));
     await deleteFiles(filesToDelete);
   } else {
     console.log('\n✓ No files to delete.');
@@ -394,12 +432,11 @@ async function main() {
     console.log('\n✓ No files to upload.');
   }
 
-  // Get all project folders
-  const items = fs.readdirSync(VIDEO_PROJECTS_DIR);
-  const projectFolders = items.filter(item => {
-    const itemPath = path.join(VIDEO_PROJECTS_DIR, item);
-    return fs.statSync(itemPath).isDirectory() && !item.startsWith('.');
-  });
+  // Get all project folders (recursive search for video files)
+  const videoProjects = findVideoFilesRecursively(VIDEO_PROJECTS_DIR);
+  
+  // Extract unique folder paths from video projects
+  const projectFolders = [...new Set(videoProjects.map(p => p.folder))];
 
   if (projectFolders.length === 0) {
     console.log('\nNo project folders found in video-projects directory.');

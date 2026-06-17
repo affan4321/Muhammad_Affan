@@ -4,6 +4,8 @@ const VideoShowcase = () => {
   const [videos, setVideos] = useState([])
   const [loading, setLoading] = useState(true)
   const [selectedVideo, setSelectedVideo] = useState(null)
+  const [hoveredCard, setHoveredCard] = useState(null)
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
 
   // Fetch video metadata from R2 bucket
   useEffect(() => {
@@ -27,6 +29,24 @@ const VideoShowcase = () => {
 
     fetchVideos()
   }, [])
+
+  // Handle 3D card effect
+  const handleMouseMove = (e, index) => {
+    const card = e.currentTarget
+    const rect = card.getBoundingClientRect()
+    const x = e.clientX - rect.left
+    const y = e.clientY - rect.top
+    const centerX = rect.width / 2
+    const centerY = rect.height / 2
+    const rotateX = ((y - centerY) / centerY) * -10
+    const rotateY = ((x - centerX) / centerX) * 10
+    setMousePosition({ x: rotateX, y: rotateY })
+  }
+
+  const handleMouseLeave = () => {
+    setMousePosition({ x: 0, y: 0 })
+    setHoveredCard(null)
+  }
 
   if (loading) {
     return (
@@ -61,7 +81,18 @@ const VideoShowcase = () => {
             {videos.map((video, index) => (
               <div 
                 key={index}
-                className="bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-shadow duration-300 cursor-pointer"
+                className="bg-white rounded-2xl shadow-xl overflow-hidden cursor-pointer transform transition-all duration-100 preserve-3d"
+                style={{
+                  transform: hoveredCard === index 
+                    ? `perspective(1000px) rotateX(${mousePosition.x}deg) rotateY(${mousePosition.y}deg) scale(1.05)` 
+                    : 'perspective(1000px) rotateX(0) rotateY(0) scale(1)',
+                  transformStyle: 'preserve-3d'
+                }}
+                onMouseMove={(e) => {
+                  setHoveredCard(index)
+                  handleMouseMove(e, index)
+                }}
+                onMouseLeave={handleMouseLeave}
                 onClick={() => setSelectedVideo(video)}
               >
                 {/* Thumbnail */}
