@@ -3,48 +3,54 @@ export const SKILLS = [
       title: "AI/ML",
       icons: "aiml.png",
       skills: [
-        { skill: "OpenAI GPT", percentage: "85%" },
+        { skill: "OpenAI / Gemini / Claude usage", percentage: "85%" },
         { skill: "ComfyUI", percentage: "75%" },
         { skill: "Kie.ai Models", percentage: "70%" },
         { skill: "Computer Vision", percentage: "70%" }
       ]
     },
     {
-      title: "Frontend",
-      icons: "frontendIcon.png",
+      title: "Creative Storytelling",
+      icons: "creative-storytelling.png",
       skills: [
-        { skill: "React", percentage: "85%" },
-        { skill: "JavaScript", percentage: "85%" },
-        { skill: "HTML/CSS", percentage: "90%" },
-        { skill: "WordPress/Elementor", percentage: "75%" }
+          { skill: "Storyboarding", percentage: "85%" },
+          { skill: "Scriptwriting", percentage: "85%" },
+          { skill: "Visual Editing", percentage: "90%" },
+          { skill: "Audio Mixing", percentage: "75%" }
       ]
     },
     {
-      title: "Backend",
-      icons: "backendIcon.png",
+      title: "Creative Production",
+      icons: "creative-production.png",
       skills: [
-        { skill: "FastAPI", percentage: "80%" },
-        { skill: "Node.js", percentage: "75%" },
-        { skill: "Socket.io", percentage: "80%" },
-        { skill: "n8n Automation", percentage: "75%" }
+        { skill: "Adobe Premiere Pro", percentage: "85%" },
+        { skill: "After Effects", percentage: "75%" },
+        { skill: "Illustrator", percentage: "75%" },
+        { skill: "Photoshop", percentage: "70%" },
+        { skill: "CapCut", percentage: "75%" },
+        { skill: "Canva", percentage: "80%" },
+
       ]
     },
     {
-      title: "Cloud/DevOps",
+      title: "Cloud/DevOps/Automation",
       icons: "clouddevops.png",
       skills: [
         { skill: "AWS (AgentCore, EC2)", percentage: "80%" },
         { skill: "Docker", percentage: "75%" },
         { skill: "LiveKit", percentage: "75%" },
-        { skill: "Telnyx", percentage: "70%" }
+        { skill: "Telnyx", percentage: "70%" },
+        { skill: "n8n Automation", percentage: "75%" }
       ]
     },
     {
       title: "Databases",
       icons: "databaseIcon.png",
       skills: [
-        { skill: "MongoDB", percentage: "75%" },
-        { skill: "MySQL", percentage: "70%" }
+        { skill: "MongoDB", percentage: "70%" },
+        { skill: "MySQL", percentage: "70%" },
+        { skill: "PostgreSQL", percentage: "70%" },
+        { skill: "Supabase", percentage: "90%" },
       ]
     },
     {
@@ -62,7 +68,7 @@ export const SKILLS = [
 export const WORK_EXPERIENCE = [
   {
     title: "AI Engineer at Soft Techniques",
-    date: "Sep 2025 - Ongoing",
+    date: "Sep 2025 - Feb 2026",
     description: "Soft Techniques is a custom AI solution provider that creates and personalizes AI product for specific user needs.",
     projects: [
       {

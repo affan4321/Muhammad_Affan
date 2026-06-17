@@ -17,11 +17,14 @@ function Hero({ workExperienceRef, contactRef }) {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-purple-50 relative overflow-hidden">
       <section className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-12 animate-fade-in">
-          <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+          <h1 className="text-5xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
             Hi, I'm Muhammad Affan
           </h1>
-          <p className="text-xl md:text-2xl text-gray-700 font-medium">
-            Passionate Ai Engineer | Bringing ideas to life
+          <p className="text-xl md:text-2xl text-gray-700 font-medium mb-2">
+            Creative Technologist | AI, Automation & Media Production
+          </p>
+          <p className="text-lg md:text-xl text-gray-600 font-medium italic mb-8">
+            Blending Smart Tech with bold creativity
           </p>
           <div className="mt-8 flex justify-center gap-4">
             <button onClick={handleViewWorkClick} className="bg-blue-600 text-white px-8 py-3 rounded-full font-semibold hover:bg-blue-700 transition-all transform hover:scale-105 shadow-lg cursor-pointer">
@@ -41,25 +44,49 @@ function Hero({ workExperienceRef, contactRef }) {
 
           <div className="absolute top-4 -left-16 md:top-8 md:-left-24 lg:top-8 lg:-left-8 animate-float-1">
             <div className="w-8 h-8 md:w-12 md:h-12 lg:w-14 lg:h-14 bg-white rounded-2xl shadow-lg flex items-center justify-center transform hover:scale-110 transition-transform">
-              <img src="/assets/React.png" alt="react" className="w-5 h-5 md:w-7 md:h-7 lg:w-9 lg:h-9 object-contain" />
+              <img src="/assets/React.png" alt="react" className="w-full h-full object-contain" />
+            </div>
+          </div>
+
+          <div className="absolute top-4 -left-16 md:top-8 md:-left-24 lg:top-[20rem] lg:-left-8 animate-float-1">
+            <div className="w-8 h-8 md:w-12 md:h-12 lg:w-20 lg:h-20 bg-white rounded-2xl shadow-lg flex items-center justify-center transform hover:scale-110 transition-transform">
+              <img src="/assets/premiere-pro.png" alt="premiere pro" className="w-full h-full object-contain" />
+            </div>
+          </div>
+
+          <div className="absolute top-4 -left-16 md:top-8 md:-left-24 lg:top-[15rem] lg:left-[10rem] animate-float-1">
+            <div className="w-8 h-8 md:w-12 md:h-12 lg:w-14 lg:h-14 bg-white rounded-2xl shadow-lg flex items-center justify-center transform hover:scale-110 transition-transform">
+              <img src="/assets/illustrator.png" alt="illustrator" className="w-full h-full object-contain" />
             </div>
           </div>
 
           <div className="absolute -top-12 right-4 md:-top-16 md:right-8 lg:-top-20 lg:right-12 animate-float-2">
             <div className="w-12 h-12 md:w-16 md:h-16 lg:w-18 lg:h-18 bg-white rounded-2xl shadow-lg flex items-center justify-center transform hover:scale-110 transition-transform">
-              <img src="/assets/css.png" alt="css" className="w-7 h-7 md:w-9 md:h-9 lg:w-11 lg:h-11 object-contain" />
+              <img src="/assets/css.png" alt="css" className="w-full h-full object-contain" />
+            </div>
+          </div>
+          
+          <div className="absolute -top-12 right-4 md:-top-16 md:right-8 lg:top-20 lg:right-18 animate-float-2">
+            <div className="w-12 h-12 md:w-16 md:h-16 lg:w-18 lg:h-18 bg-white rounded-2xl shadow-lg flex items-center justify-center transform hover:scale-110 transition-transform">
+              <img src="/assets/after-effects.png" alt="after effects" className="w-full h-full object-contain" />
+            </div>
+          </div>
+
+          <div className="absolute -top-12 right-4 md:-top-16 md:right-8 lg:-top-[2rem] lg:right-[20rem] animate-float-2">
+            <div className="w-12 h-12 md:w-16 md:h-16 lg:w-18 lg:h-18 bg-white rounded-2xl shadow-lg flex items-center justify-center transform hover:scale-110 transition-transform">
+              <img src="/assets/photoshop.png" alt="photoshop" className="w-full h-full object-contain" />
             </div>
           </div>
 
           <div className="absolute top-1/2 -left-20 md:top-1/2 md:-left-28 lg:top-1/2 lg:-left-36 animate-float-3">
             <div className="w-10 h-10 md:w-14 md:h-14 lg:w-16 lg:h-16 bg-white rounded-2xl shadow-lg flex items-center justify-center transform hover:scale-110 transition-transform">
-              <img src="/assets/HTML.png" alt="html" className="w-6 h-6 md:w-8 md:h-8 lg:w-10 lg:h-10 object-contain" />
+              <img src="/assets/HTML.png" alt="html" className="w-full h-full object-contain" />
             </div>
           </div>
 
           <div className="absolute bottom-8 -right-12 md:bottom-12 md:-right-20 lg:bottom-16 lg:-right-28 animate-float-4">
             <div className="w-9 h-9 md:w-13 md:h-13 lg:w-15 lg:h-15 bg-white rounded-2xl shadow-lg flex items-center justify-center transform hover:scale-110 transition-transform">
-              <img src="/assets/Javascript.png" alt="javascript" className="w-6 h-6 md:w-8 md:h-8 lg:w-10 lg:h-10 object-contain" />
+              <img src="/assets/Javascript.png" alt="javascript" className="w-full h-full object-contain" />
             </div>
           </div>
         </div>

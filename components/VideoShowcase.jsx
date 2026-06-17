@@ -1,0 +1,144 @@
+import React, { useState, useEffect } from 'react'
+
+const VideoShowcase = () => {
+  const [videos, setVideos] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [selectedVideo, setSelectedVideo] = useState(null)
+
+  // Fetch video metadata from R2 bucket
+  useEffect(() => {
+    const fetchVideos = async () => {
+      try {
+        // Fetch metadata.json from R2 bucket
+        const response = await fetch('https://videoassets.smaffan.com/metadata.json')
+        if (!response.ok) {
+          throw new Error('Failed to fetch video metadata')
+        }
+        const data = await response.json()
+        setVideos(data)
+      } catch (error) {
+        console.error('Error fetching videos:', error)
+        // Fallback to empty array if fetch fails
+        setVideos([])
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchVideos()
+  }, [])
+
+  if (loading) {
+    return (
+      <section className="py-20 bg-gradient-to-b from-gray-50 to-white">
+        <div className="container mx-auto px-4">
+          <div className="text-center">
+            <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+            <p className="mt-4 text-gray-600">Loading video projects...</p>
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  return (
+    <section className="py-20 bg-gradient-to-b from-gray-50 to-white">
+      <div className="container mx-auto px-4">
+        <h2 className="text-4xl md:text-5xl font-bold text-center mb-4 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+          Video Production Showcase
+        </h2>
+        <p className="text-gray-600 text-center mb-12 max-w-2xl mx-auto">
+          Explore my creative video editing and media production work
+        </p>
+
+        {videos.length === 0 ? (
+          <div className="text-center py-12">
+            <p className="text-gray-500 text-lg">No video projects available yet.</p>
+            <p className="text-gray-400 text-sm mt-2">Check back soon for new content!</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {videos.map((video, index) => (
+              <div 
+                key={index}
+                className="bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-shadow duration-300 cursor-pointer"
+                onClick={() => setSelectedVideo(video)}
+              >
+                {/* Thumbnail */}
+                <div className="relative aspect-video bg-gray-900">
+                  <img
+                    src={video.thumbnail}
+                    alt={video.title}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300">
+                    <div className="w-16 h-16 bg-white/90 rounded-full flex items-center justify-center">
+                      <svg className="w-8 h-8 text-blue-600 ml-1" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M8 5v14l11-7z"/>
+                      </svg>
+                    </div>
+                  </div>
+                  {video.duration && (
+                    <div className="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded">
+                      {video.duration}
+                    </div>
+                  )}
+                </div>
+
+                {/* Content */}
+                <div className="p-6">
+                  <h3 className="text-xl font-bold text-gray-800 mb-2">{video.title}</h3>
+                  <p className="text-gray-600 text-sm mb-4 line-clamp-2">{video.description}</p>
+                  
+                  {video.tags && video.tags.length > 0 && (
+                    <div className="flex flex-wrap gap-2">
+                      {video.tags.map((tag, idx) => (
+                        <span 
+                          key={idx}
+                          className="px-3 py-1 bg-gradient-to-r from-blue-100 to-purple-100 text-blue-800 rounded-full text-xs font-medium"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* Video Modal */}
+      {selectedVideo && (
+        <div 
+          className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4"
+          onClick={() => setSelectedVideo(null)}
+        >
+          <div className="relative max-w-6xl w-full">
+            <button
+              onClick={() => setSelectedVideo(null)}
+              className="absolute -top-12 right-0 text-white text-2xl font-bold hover:text-blue-400 transition-colors"
+            >
+              ✕ Close
+            </button>
+            <div className="bg-black rounded-lg overflow-hidden">
+              <video
+                src={selectedVideo.videoUrl}
+                controls
+                autoPlay
+                className="w-full max-h-[80vh]"
+              />
+            </div>
+            <div className="mt-4 text-white">
+              <h3 className="text-2xl font-bold mb-2">{selectedVideo.title}</h3>
+              <p className="text-gray-300">{selectedVideo.description}</p>
+            </div>
+          </div>
+        </div>
+      )}
+    </section>
+  )
+}
+
+export default VideoShowcase

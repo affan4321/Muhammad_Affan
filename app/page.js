@@ -6,6 +6,7 @@ import Skills from '../components/Skills'
 import WorkExperience from '../components/WorkExperience'
 import Contact from '../components/Contact'
 import Subdomains from '../components/Subdomains'
+import VideoShowcase from '../components/VideoShowcase'
 import Footer from '../components/Footer'
 import { useRef } from 'react'
 
@@ -15,10 +16,11 @@ export default function Home() {
   const workExperienceRef = useRef(null)
   const contactRef = useRef(null)
   const subdomainsRef = useRef(null)
+  const videoShowcaseRef = useRef(null)
 
   return (
     <>
-      <Navbar heroRef={heroRef} skillsRef={skillsRef} workExperienceRef={workExperienceRef} contactRef={contactRef} subdomainsRef={subdomainsRef} />
+      <Navbar heroRef={heroRef} skillsRef={skillsRef} workExperienceRef={workExperienceRef} contactRef={contactRef} subdomainsRef={subdomainsRef} videoShowcaseRef={videoShowcaseRef} />
       <section ref={heroRef} id="home">
         <Hero workExperienceRef={workExperienceRef} contactRef={contactRef} />
       </section>
@@ -27,6 +29,9 @@ export default function Home() {
       </section>
       <section ref={workExperienceRef} id="experience">
         <WorkExperience />
+      </section>
+      <section ref={videoShowcaseRef} id="videos">
+        <VideoShowcase />
       </section>
       <section ref={subdomainsRef} id="subdomains">
         <Subdomains />

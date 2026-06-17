@@ -23,3 +23,8 @@ yarn-debug.log*
 yarn-error.log*
 
 .next
+
+.env*
+
+# Video projects (uploaded to Cloudflare R2)
+/video-projects

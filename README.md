@@ -1,7 +1,44 @@
-Documentation
-© 2024 Muhammad Affan. All Rights Reserved.
+# Muhammad Affan Portfolio
 
-This is a Profile/ Portfolio website aims to display myself. I have used React.js and VsCode for the development and GitHub for the deployment.
+A modern, responsive portfolio website showcasing my work as a Creative Technologist specializing in AI, Automation & Media Production.
 
-How to access
-Just click on the link url down below to access the site. ---->> https://smaffan.com <<----
+**Live Site:** [https://smaffan.com](https://smaffan.com)
+
+## Video Upload System
+
+The portfolio includes an automated video upload system that syncs local video projects to Cloudflare R2:
+
+### Project Structure
+Create video projects in the `video-projects/` folder:
+```
+video-projects/
+└── project-name/
+    ├── video.mp4
+    ├── thumbnail.jpg
+    └── metadata.json
+```
+
+### metadata.json Format
+```json
+{
+  "title": "Project Title",
+  "description": "Project description",
+  "tags": ["editing", "production"],
+  "duration": "00:00",
+  "category": "Commercial"
+}
+```
+
+### Upload Videos
+```bash
+npm run upload-videos
+```
+
+## License
+
+© 2025 Muhammad Affan. All rights reserved.
+
+## Contact
+
+- **Website:** [https://smaffan.com](https://smaffan.com)
+- **Email:** Available through contact form on the site
