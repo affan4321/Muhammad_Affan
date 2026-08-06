@@ -17,7 +17,8 @@ require('dotenv').config();
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
-const { getVideoDuration } = require('get-video-duration');
+const getVideoDuration = require('get-video-duration');
+const ffmpeg = require('fluent-ffmpeg');
 const { S3Client, PutObjectCommand, ListObjectsV2Command, DeleteObjectCommand, DeleteObjectsCommand } = require('@aws-sdk/client-s3');
 
 // Configuration
@@ -160,12 +161,28 @@ async function generateMetadata(projectName, files, projectPath) {
   const videoFile = files.find(f => 
     f.endsWith('.mp4') || f.endsWith('.mov') || f.endsWith('.webm')
   );
-  const thumbnailFile = files.find(f => 
+  let thumbnailFile = files.find(f => 
     f.endsWith('.jpg') || f.endsWith('.jpeg') || f.endsWith('.png')
   );
 
-  if (!videoFile || !thumbnailFile) {
+  if (!videoFile) {
     return null;
+  }
+
+  // Auto-generate thumbnail if not provided
+  if (!thumbnailFile) {
+    console.log(`  ⚠️  No thumbnail found, generating from video...`);
+    const videoPath = path.join(projectPath, videoFile);
+    const thumbnailPath = path.join(projectPath, 'thumbnail.png');
+    
+    try {
+      await generateThumbnailFromVideo(videoPath, thumbnailPath);
+      thumbnailFile = 'thumbnail.png';
+      files.push('thumbnail.png');
+    } catch (error) {
+      console.log(`  ✗ Failed to generate thumbnail: ${error.message}`);
+      // Continue without thumbnail
+    }
   }
 
   // Fetch actual video duration
@@ -192,6 +209,29 @@ async function generateMetadata(projectName, files, projectPath) {
   };
 
   return metadata;
+}
+
+/**
+ * Generate thumbnail from video first frame
+ */
+function generateThumbnailFromVideo(videoPath, outputPath) {
+  return new Promise((resolve, reject) => {
+    ffmpeg(videoPath)
+      .screenshots({
+        timestamps: ['0:00'],
+        filename: path.basename(outputPath),
+        folder: path.dirname(outputPath),
+        size: '1280x720'
+      })
+      .on('end', () => {
+        console.log(`  ✓ Generated thumbnail from video: ${path.basename(outputPath)}`);
+        resolve(outputPath);
+      })
+      .on('error', (err) => {
+        console.log(`  ⚠️  Could not generate thumbnail: ${err.message}`);
+        reject(err);
+      });
+  });
 }
 
 /**
@@ -298,13 +338,39 @@ async function processProject(projectName) {
   const files = fs.readdirSync(projectPath);
   const metadataPath = path.join(projectPath, METADATA_FILE);
   
+  // Check for missing thumbnail and generate if needed
+  const videoFile = files.find(f => 
+    f.endsWith('.mp4') || f.endsWith('.mov') || f.endsWith('.webm')
+  );
+  let thumbnailFile = files.find(f => 
+    f.endsWith('.jpg') || f.endsWith('.jpeg') || f.endsWith('.png')
+  );
+
+  if (videoFile && !thumbnailFile) {
+    console.log(`  ⚠️  No thumbnail found, generating from video...`);
+    const videoPath = path.join(projectPath, videoFile);
+    const thumbnailPath = path.join(projectPath, 'thumbnail.png');
+    
+    try {
+      await generateThumbnailFromVideo(videoPath, thumbnailPath);
+      thumbnailFile = 'thumbnail.png';
+      files.push('thumbnail.png');
+      
+      // Upload the newly generated thumbnail
+      const contentType = getContentType('thumbnail.png');
+      await uploadFile(`${projectName}/thumbnail.png`, thumbnailPath, contentType);
+    } catch (error) {
+      console.log(`  ✗ Failed to generate thumbnail: ${error.message}`);
+    }
+  }
+
   // Check for metadata.json, auto-generate if missing
   if (!files.includes(METADATA_FILE)) {
     console.log(`⚠️  Missing ${METADATA_FILE} in ${projectName}, auto-generating...`);
     const autoMetadata = await generateMetadata(projectName, files, projectPath);
     
     if (!autoMetadata) {
-      console.error(`✗ Cannot auto-generate metadata: missing video or thumbnail file`);
+      console.error(`✗ Cannot auto-generate metadata: missing video file`);
       return null;
     }
     
@@ -329,7 +395,7 @@ async function processProject(projectName) {
   return {
     ...metadata,
     videoUrl: `https://videoassets.smaffan.com/${projectName}/${files.find(f => f.endsWith('.mp4') || f.endsWith('.mov') || f.endsWith('.webm'))}`,
-    thumbnail: `https://videoassets.smaffan.com/${projectName}/${files.find(f => f.endsWith('.jpg') || f.endsWith('.jpeg') || f.endsWith('.png'))}`,
+    thumbnail: thumbnailFile ? `https://videoassets.smaffan.com/${projectName}/${thumbnailFile}` : null,
   };
 }
 
