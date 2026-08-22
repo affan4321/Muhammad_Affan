@@ -1,6 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 function AiWebAppsSection({ sectionRef }) {
+  const [hoveredCard, setHoveredCard] = useState(null)
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
+
+  const handleMouseMove = (e, index) => {
+    const card = e.currentTarget
+    const rect = card.getBoundingClientRect()
+    const x = e.clientX - rect.left
+    const y = e.clientY - rect.top
+    const centerX = rect.width / 2
+    const centerY = rect.height / 2
+    const rotateX = ((y - centerY) / centerY) * -10
+    const rotateY = ((x - centerX) / centerX) * 10
+    setMousePosition({ x: rotateX, y: rotateY })
+  }
+
+  const handleMouseLeave = () => {
+    setMousePosition({ x: 0, y: 0 })
+    setHoveredCard(null)
+  }
+
   const projects = [
   {
     title: "Splendor — AI-Powered Fashion E-Commerce",
@@ -71,14 +91,27 @@ function AiWebAppsSection({ sectionRef }) {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {projects.map((project, index) => (
-            <a
+            <div
               key={index}
-              href={project.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="block"
+              className="bg-white rounded-2xl shadow-xl overflow-hidden cursor-pointer transform transition-all duration-100 preserve-3d"
+              style={{
+                transform: hoveredCard === index
+                  ? `perspective(1000px) rotateX(${mousePosition.x}deg) rotateY(${mousePosition.y}deg) scale(1.05)`
+                  : 'perspective(1000px) rotateX(0) rotateY(0) scale(1)',
+                transformStyle: 'preserve-3d'
+              }}
+              onMouseMove={(e) => {
+                setHoveredCard(index)
+                handleMouseMove(e, index)
+              }}
+              onMouseLeave={handleMouseLeave}
             >
-              <div className="bg-white rounded-2xl shadow-xl overflow-hidden transform transition-all duration-300 preserve-3d hover:scale-105 hover:shadow-2xl cursor-pointer">
+              <a
+                href={project.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block h-full"
+              >
                 <div className="relative h-48 bg-gradient-to-br from-purple-400 to-pink-400">
                   <img
                     src={project.image}
@@ -100,8 +133,8 @@ function AiWebAppsSection({ sectionRef }) {
                     ))}
                   </div>
                 </div>
-              </div>
-            </a>
+              </a>
+            </div>
           ))}
         </div>
       </div>
