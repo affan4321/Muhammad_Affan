@@ -24,7 +24,7 @@ export default function Home() {
     <>
       <Navbar heroRef={heroRef} skillsRef={skillsRef} workExperienceRef={workExperienceRef} contactRef={contactRef} workRef={workRef} />
       <section ref={heroRef} id="home">
-        <Hero workExperienceRef={workExperienceRef} contactRef={contactRef} />
+        <Hero workRef={workRef} contactRef={contactRef} />
       </section>
       <section ref={skillsRef} id="skillset">
         <Skills />

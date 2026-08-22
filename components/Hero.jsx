@@ -1,9 +1,9 @@
 import React from 'react'
 
-function Hero({ workExperienceRef, contactRef }) {
+function Hero({ workRef, contactRef }) {
   const handleViewWorkClick = () => {
-    if (workExperienceRef && workExperienceRef.current) {
-      workExperienceRef.current.scrollIntoView({ behavior: 'smooth' });
+    if (workRef && workRef.current) {
+      workRef.current.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
