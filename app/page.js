@@ -5,7 +5,6 @@ import Hero from '../components/Hero'
 import Skills from '../components/Skills'
 import WorkExperience from '../components/WorkExperience'
 import Contact from '../components/Contact'
-import Subdomains from '../components/Subdomains'
 import VideoShowcase from '../components/VideoShowcase'
 import WorkSection from '../components/WorkSection'
 import AiWebAppsSection from '../components/AiWebAppsSection'
@@ -17,14 +16,13 @@ export default function Home() {
   const skillsRef = useRef(null)
   const workExperienceRef = useRef(null)
   const contactRef = useRef(null)
-  const subdomainsRef = useRef(null)
   const workRef = useRef(null)
   const videoEditingRef = useRef(null)
   const aiWebAppsRef = useRef(null)
 
   return (
     <>
-      <Navbar heroRef={heroRef} skillsRef={skillsRef} workExperienceRef={workExperienceRef} contactRef={contactRef} workRef={workRef} subdomainsRef={subdomainsRef} />
+      <Navbar heroRef={heroRef} skillsRef={skillsRef} workExperienceRef={workExperienceRef} contactRef={contactRef} workRef={workRef} />
       <section ref={heroRef} id="home">
         <Hero workExperienceRef={workExperienceRef} contactRef={contactRef} />
       </section>
@@ -42,9 +40,6 @@ export default function Home() {
       </section>
       <section ref={aiWebAppsRef} id="ai-web-apps">
         <AiWebAppsSection sectionRef={aiWebAppsRef} />
-      </section>
-      <section ref={subdomainsRef} id="subdomains">
-        <Subdomains />
       </section>
       <section ref={contactRef} id="contact">
         <Contact />

@@ -74,6 +74,15 @@ function AiWebAppsSection({ sectionRef }) {
     tech: ["React", "Video", "Motion Design", "Color Grading"],
     image: "/assets/video-portfolio.jpg",
     link: "https://video.smaffan.com/"
+  },
+
+  {
+    title: "Dark Tunnel — Interactive 3D Portfolio",
+    description:
+      "An immersive 3D portfolio experience where visitors explore a mysterious tunnel, discover projects through branching paths, and navigate an interactive game-like environment.",
+    tech: ["Next.js", "React Three Fiber", "Three.js", "GSAP", "Zustand"],
+    image: "/assets/haunted.png",
+    link: "https://game.smaffan.com/"
   }
 ];
 
