@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 
 const VideoShowcase = ({ sectionRef }) => {
   const [videos, setVideos] = useState([])
@@ -6,6 +6,7 @@ const VideoShowcase = ({ sectionRef }) => {
   const [selectedVideo, setSelectedVideo] = useState(null)
   const [hoveredCard, setHoveredCard] = useState(null)
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
+  const videoRef = useRef(null)
 
   // Fetch video metadata from Google Drive API
   useEffect(() => {
@@ -46,6 +47,13 @@ const VideoShowcase = ({ sectionRef }) => {
     setMousePosition({ x: 0, y: 0 })
     setHoveredCard(null)
   }
+
+  // Pause video when modal closes
+  useEffect(() => {
+    if (!selectedVideo && videoRef.current) {
+      videoRef.current.pause()
+    }
+  }, [selectedVideo])
 
   if (loading) {
     return (
@@ -160,26 +168,28 @@ const VideoShowcase = ({ sectionRef }) => {
 
       {/* Video Modal */}
       {selectedVideo && (
-        <div 
+        <div
           className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4"
           onClick={() => setSelectedVideo(null)}
         >
-          <div className="relative max-w-6xl w-full">
+          <div className="relative max-w-6xl w-full" onClick={(e) => e.stopPropagation()}>
             <button
               onClick={() => setSelectedVideo(null)}
-              className="absolute -top-12 right-0 text-white text-2xl font-bold hover:text-blue-400 transition-colors"
+              className="absolute -top-12 right-0 text-white text-2xl font-bold hover:text-blue-400 transition-colors z-10"
             >
               ✕ Close
             </button>
-            <div className="bg-black rounded-lg overflow-hidden">
+            <div className="bg-black rounded-lg overflow-hidden" onClick={(e) => e.stopPropagation()}>
               <video
+                ref={videoRef}
                 src={selectedVideo.videoUrl}
                 controls
                 autoPlay
                 className="w-full max-h-[80vh]"
+                onClick={(e) => e.stopPropagation()}
               />
             </div>
-            <div className="mt-4 text-white">
+            <div className="mt-4 text-white" onClick={(e) => e.stopPropagation()}>
               <h3 className="text-2xl font-bold mb-2">{selectedVideo.title}</h3>
               <p className="text-gray-300">{selectedVideo.description}</p>
             </div>
