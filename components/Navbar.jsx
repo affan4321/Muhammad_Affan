@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const Navbar = ({ heroRef, skillsRef, workExperienceRef, contactRef,videoShowcaseRef, subdomainsRef }) => {
+const Navbar = ({ heroRef, skillsRef, workExperienceRef, contactRef, workRef, subdomainsRef }) => {
   const [showMenu, setShowMenu] = useState(false);
 
   const handleHamburgerClick = () => {
@@ -50,8 +50,8 @@ const Navbar = ({ heroRef, skillsRef, workExperienceRef, contactRef,videoShowcas
             Experience
             <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 transition-all group-hover:w-full"></span>
           </a></li>
-          <li><a className="text-gray-700 hover:text-blue-600 font-medium transition-colors relative group cursor-pointer" onClick={() => handleLinkClick(videoShowcaseRef)}>
-            Videos
+          <li><a className="text-gray-700 hover:text-blue-600 font-medium transition-colors relative group cursor-pointer" onClick={() => handleLinkClick(workRef)}>
+            Work
             <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 transition-all group-hover:w-full"></span>
           </a></li>
           <li><a className="text-gray-700 hover:text-blue-600 font-medium transition-colors relative group cursor-pointer" onClick={() => handleLinkClick(subdomainsRef)}>

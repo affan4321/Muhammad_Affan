@@ -7,6 +7,8 @@ import WorkExperience from '../components/WorkExperience'
 import Contact from '../components/Contact'
 import Subdomains from '../components/Subdomains'
 import VideoShowcase from '../components/VideoShowcase'
+import WorkSection from '../components/WorkSection'
+import AiWebAppsSection from '../components/AiWebAppsSection'
 import Footer from '../components/Footer'
 import { useRef } from 'react'
 
@@ -16,11 +18,13 @@ export default function Home() {
   const workExperienceRef = useRef(null)
   const contactRef = useRef(null)
   const subdomainsRef = useRef(null)
-  const videoShowcaseRef = useRef(null)
+  const workRef = useRef(null)
+  const videoEditingRef = useRef(null)
+  const aiWebAppsRef = useRef(null)
 
   return (
     <>
-      <Navbar heroRef={heroRef} skillsRef={skillsRef} workExperienceRef={workExperienceRef} contactRef={contactRef} subdomainsRef={subdomainsRef} videoShowcaseRef={videoShowcaseRef} />
+      <Navbar heroRef={heroRef} skillsRef={skillsRef} workExperienceRef={workExperienceRef} contactRef={contactRef} workRef={workRef} subdomainsRef={subdomainsRef} />
       <section ref={heroRef} id="home">
         <Hero workExperienceRef={workExperienceRef} contactRef={contactRef} />
       </section>
@@ -30,8 +34,14 @@ export default function Home() {
       <section ref={workExperienceRef} id="experience">
         <WorkExperience />
       </section>
-      <section ref={videoShowcaseRef} id="videos">
-        <VideoShowcase />
+      <section ref={workRef} id="work">
+        <WorkSection videoEditingRef={videoEditingRef} aiWebAppsRef={aiWebAppsRef} />
+      </section>
+      <section ref={videoEditingRef} id="video-editing">
+        <VideoShowcase sectionRef={videoEditingRef} />
+      </section>
+      <section ref={aiWebAppsRef} id="ai-web-apps">
+        <AiWebAppsSection sectionRef={aiWebAppsRef} />
       </section>
       <section ref={subdomainsRef} id="subdomains">
         <Subdomains />

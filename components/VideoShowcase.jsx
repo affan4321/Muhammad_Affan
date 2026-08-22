@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react'
 
-const VideoShowcase = () => {
+const VideoShowcase = ({ sectionRef }) => {
   const [videos, setVideos] = useState([])
   const [loading, setLoading] = useState(true)
   const [selectedVideo, setSelectedVideo] = useState(null)
   const [hoveredCard, setHoveredCard] = useState(null)
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
 
-  // Fetch video metadata from R2 bucket
+  // Fetch video metadata from Google Drive (via API endpoint)
   useEffect(() => {
     const fetchVideos = async () => {
       try {
-        // Fetch metadata.json from R2 bucket
+        // For now, keep using Cloudflare R2 until we set up the API endpoint
         const response = await fetch('https://videoassets.smaffan.com/metadata.json')
         if (!response.ok) {
           throw new Error('Failed to fetch video metadata')
@@ -62,7 +62,7 @@ const VideoShowcase = () => {
   }
 
   return (
-    <section className="py-20 bg-gradient-to-b from-gray-50 to-white">
+    <section ref={sectionRef} className="py-20 bg-gradient-to-b from-gray-50 to-white">
       <div className="container mx-auto px-4">
         <h2 className="text-4xl md:text-5xl font-bold text-center mb-4 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
           Video Production Showcase
