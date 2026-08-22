@@ -2,31 +2,60 @@ import React from 'react';
 
 function AiWebAppsSection({ sectionRef }) {
   const projects = [
-    {
-      title: "AI-Powered Content Generator",
-      description: "An intelligent content creation tool using advanced language models",
-      tech: ["React", "Node.js", "OpenAI API"],
-      image: "/assets/ai-project-1.jpg"
-    },
-    {
-      title: "Smart Task Automation",
-      description: "Automated workflow system for business process optimization",
-      tech: ["Python", "FastAPI", "Celery"],
-      image: "/assets/ai-project-2.jpg"
-    },
-    {
-      title: "Computer Vision Dashboard",
-      description: "Real-time image analysis and object detection platform",
-      tech: ["TensorFlow", "React", "Flask"],
-      image: "/assets/ai-project-3.jpg"
-    },
-    {
-      title: "Natural Language Processor",
-      description: "Advanced text analysis and sentiment analysis tool",
-      tech: ["Python", "NLTK", "spaCy"],
-      image: "/assets/ai-project-4.jpg"
-    }
-  ];
+  {
+    title: "Splendor — AI-Powered Fashion E-Commerce",
+    description:
+      "A full-featured fashion e-commerce platform with AI-powered virtual try-on and computer vision-based body measurement estimation.",
+    tech: ["React", "Node.js", "Computer Vision", "AI"],
+    image: "/assets/splendor.jpg",
+    link: "https://splendor-orpin.vercel.app/"
+  },
+
+  {
+    title: "AI Voice Assistant",
+    description:
+      "A real-time AI voice assistant that connects users with configurable voice agents for natural conversational interactions and FAQ-based support.",
+    tech: ["React", "LiveKit", "AI", "Voice Agents"],
+    image: "/assets/voice-agent.jpg",
+    link: "https://voice-agent-livekit.vercel.app/"
+  },
+
+  {
+    title: "DisasterShield",
+    description:
+      "An AI-powered disaster response platform designed to streamline the process from disaster assessment to repair and recovery.",
+    tech: ["React", "AI", "Computer Vision", "Web Platform"],
+    image: "/assets/disaster-shield.jpg",
+    link: "https://disaster-shield.vercel.app/"
+  },
+
+  {
+    title: "Stories We Tell",
+    description:
+      "An AI-powered cinematic story development assistant that helps transform ideas into characters, scenes, scripts, and structured story concepts.",
+    tech: ["React", "AI", "LLM", "Story Generation"],
+    image: "/assets/stories-we-tell.jpg",
+    link: "https://stories-we-tell.vercel.app/chat"
+  },
+
+  {
+    title: "Abdullah Chughtai — Creative Portfolio",
+    description:
+      "A cinematic portfolio experience for a video editor and motion designer, showcasing selected work across long-form editing, short-form content, motion design, and SaaS videos.",
+    tech: ["React", "Motion Design", "Video", "WebGL"],
+    image: "/assets/abdullah-chughtai.jpg",
+    link: "https://abdullahchughtai.vercel.app/"
+  },
+
+  {
+    title: "Muhammad Affan — Video Editing Portfolio",
+    description:
+      "A cinematic video editing portfolio focused on commercials, music videos, and documentaries with an emphasis on storytelling, color grading, sound design, and motion.",
+    tech: ["React", "Video", "Motion Design", "Color Grading"],
+    image: "/assets/video-portfolio.jpg",
+    link: "https://video.smaffan.com/"
+  }
+];
 
   return (
     <section ref={sectionRef} className="py-20 bg-gradient-to-b from-purple-50 to-white">
@@ -42,32 +71,37 @@ function AiWebAppsSection({ sectionRef }) {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {projects.map((project, index) => (
-            <div
+            <a
               key={index}
-              className="bg-white rounded-2xl shadow-xl overflow-hidden transform transition-all duration-300 preserve-3d hover:scale-105 hover:shadow-2xl"
+              href={project.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block"
             >
-              <div className="relative h-48 bg-gradient-to-br from-purple-400 to-pink-400">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <svg className="w-16 h-16 text-white opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                  </svg>
+              <div className="bg-white rounded-2xl shadow-xl overflow-hidden transform transition-all duration-300 preserve-3d hover:scale-105 hover:shadow-2xl cursor-pointer">
+                <div className="relative h-48 bg-gradient-to-br from-purple-400 to-pink-400">
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <svg className="w-16 h-16 text-white opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                  </div>
+                </div>
+                <div className="p-6">
+                  <h3 className="text-xl font-bold text-gray-800 mb-2">{project.title}</h3>
+                  <p className="text-gray-600 text-sm mb-4">{project.description}</p>
+                  <div className="flex flex-wrap gap-2">
+                    {project.tech.map((tech, idx) => (
+                      <span
+                        key={idx}
+                        className="px-3 py-1 bg-gradient-to-r from-purple-100 to-pink-100 text-purple-800 rounded-full text-xs font-medium"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </div>
-              <div className="p-6">
-                <h3 className="text-xl font-bold text-gray-800 mb-2">{project.title}</h3>
-                <p className="text-gray-600 text-sm mb-4">{project.description}</p>
-                <div className="flex flex-wrap gap-2">
-                  {project.tech.map((tech, idx) => (
-                    <span
-                      key={idx}
-                      className="px-3 py-1 bg-gradient-to-r from-purple-100 to-pink-100 text-purple-800 rounded-full text-xs font-medium"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </div>
+            </a>
           ))}
         </div>
       </div>
