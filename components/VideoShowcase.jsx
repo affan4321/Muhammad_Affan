@@ -69,8 +69,38 @@ const VideoShowcase = ({ sectionRef }) => {
 
   // Enter fullscreen on mobile when video is selected
   useEffect(() => {
-    if (selectedVideo && isMobile && videoRef.current) {
-      videoRef.current.requestFullscreen?.() || videoRef.current.webkitRequestFullscreen?.()
+    if (selectedVideo && isMobile) {
+      const video = document.createElement('video')
+      video.src = selectedVideo.videoUrl
+      video.controls = true
+      video.autoplay = true
+      video.style.position = 'fixed'
+      video.style.top = '0'
+      video.style.left = '0'
+      video.style.width = '100%'
+      video.style.height = '100%'
+      video.style.zIndex = '9999'
+      video.style.backgroundColor = 'black'
+
+      const handleFullscreenExit = () => {
+        video.pause()
+        video.remove()
+        setSelectedVideo(null)
+        document.removeEventListener('fullscreenchange', handleFullscreenExit)
+        document.removeEventListener('webkitfullscreenchange', handleFullscreenExit)
+      }
+
+      document.addEventListener('fullscreenchange', handleFullscreenExit)
+      document.addEventListener('webkitfullscreenchange', handleFullscreenExit)
+
+      document.body.appendChild(video)
+      video.requestFullscreen?.() || video.webkitRequestFullscreen?.()
+
+      return () => {
+        video.remove()
+        document.removeEventListener('fullscreenchange', handleFullscreenExit)
+        document.removeEventListener('webkitfullscreenchange', handleFullscreenExit)
+      }
     }
   }, [selectedVideo, isMobile])
 
@@ -210,13 +240,13 @@ const VideoShowcase = ({ sectionRef }) => {
         )}
       </div>
 
-      {/* Video Modal */}
+      {/* Video Modal - Desktop Only */}
       {selectedVideo && !isMobile && (
         <div
           className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4"
           onClick={() => setSelectedVideo(null)}
         >
-          <div className="relative w-fit" onClick={(e) => e.stopPropagation()}>
+          <div className="relative w-full max-w-6xl" onClick={(e) => e.stopPropagation()}>
             <button
               onClick={() => setSelectedVideo(null)}
               className="absolute -top-8 right-0 text-white text-xl font-bold hover:text-blue-400 transition-colors z-10"
@@ -229,7 +259,7 @@ const VideoShowcase = ({ sectionRef }) => {
                 src={selectedVideo.videoUrl}
                 controls
                 autoPlay
-                className="max-w-[90vw] max-h-[85vh]"
+                className="w-full max-h-[85vh]"
                 onClick={(e) => e.stopPropagation()}
               />
             </div>
