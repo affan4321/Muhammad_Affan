@@ -7,6 +7,7 @@ const VideoShowcase = ({ sectionRef }) => {
   const [isMobile, setIsMobile] = useState(false)
   const [hoveredCard, setHoveredCard] = useState(null)
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
+  const [selectedFilter, setSelectedFilter] = useState('All')
   const videoRef = useRef(null)
 
   // Fetch video metadata from Google Drive API
@@ -73,6 +74,14 @@ const VideoShowcase = ({ sectionRef }) => {
     }
   }, [selectedVideo, isMobile])
 
+  // Get unique filters from videos
+  const filters = ['All', ...Array.from(new Set(videos.map(v => v.tag || 'Film')))]
+
+  // Filter videos based on selected filter
+  const filteredVideos = selectedFilter === 'All'
+    ? videos
+    : videos.filter(v => (v.tag || 'Film') === selectedFilter)
+
   if (loading) {
     return (
       <section className="py-20 bg-gradient-to-b from-gray-50 to-white">
@@ -92,18 +101,35 @@ const VideoShowcase = ({ sectionRef }) => {
         <h2 className="text-4xl md:text-5xl font-bold text-center mb-4 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
           Video Production Showcase
         </h2>
-        <p className="text-gray-600 text-center mb-12 max-w-2xl mx-auto">
+        <p className="text-gray-600 text-center mb-8 max-w-2xl mx-auto">
           Explore my creative video editing and media production work
         </p>
 
-        {videos.length === 0 ? (
+        {/* Filter Buttons */}
+        <div className="flex flex-wrap justify-center gap-3 mb-12">
+          {filters.map((filter) => (
+            <button
+              key={filter}
+              onClick={() => setSelectedFilter(filter)}
+              className={`px-6 py-2 rounded-full font-medium transition-all ${
+                selectedFilter === filter
+                  ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg'
+                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+              }`}
+            >
+              {filter}
+            </button>
+          ))}
+        </div>
+
+        {filteredVideos.length === 0 ? (
           <div className="text-center py-12">
             <p className="text-gray-500 text-lg">No video projects available yet.</p>
             <p className="text-gray-400 text-sm mt-2">Check back soon for new content!</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {videos.map((video, index) => (
+            {filteredVideos.map((video, index) => (
               <div 
                 key={index}
                 className="bg-white rounded-2xl shadow-xl overflow-hidden cursor-pointer transform transition-all duration-100 preserve-3d"
