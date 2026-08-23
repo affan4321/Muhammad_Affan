@@ -4,6 +4,7 @@ const VideoShowcase = ({ sectionRef }) => {
   const [videos, setVideos] = useState([])
   const [loading, setLoading] = useState(true)
   const [selectedVideo, setSelectedVideo] = useState(null)
+  const [isMobile, setIsMobile] = useState(false)
   const [hoveredCard, setHoveredCard] = useState(null)
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
   const videoRef = useRef(null)
@@ -30,6 +31,16 @@ const VideoShowcase = ({ sectionRef }) => {
     fetchVideos()
   }, [])
 
+  // Detect mobile device
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+
   // Handle 3D card effect
   const handleMouseMove = (e, index) => {
     const card = e.currentTarget
@@ -54,6 +65,13 @@ const VideoShowcase = ({ sectionRef }) => {
       videoRef.current.pause()
     }
   }, [selectedVideo])
+
+  // Enter fullscreen on mobile when video is selected
+  useEffect(() => {
+    if (selectedVideo && isMobile && videoRef.current) {
+      videoRef.current.requestFullscreen?.() || videoRef.current.webkitRequestFullscreen?.()
+    }
+  }, [selectedVideo, isMobile])
 
   if (loading) {
     return (
@@ -167,15 +185,15 @@ const VideoShowcase = ({ sectionRef }) => {
       </div>
 
       {/* Video Modal */}
-      {selectedVideo && (
+      {selectedVideo && !isMobile && (
         <div
           className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4"
           onClick={() => setSelectedVideo(null)}
         >
-          <div className="relative max-w-6xl w-full" onClick={(e) => e.stopPropagation()}>
+          <div className="relative w-fit" onClick={(e) => e.stopPropagation()}>
             <button
               onClick={() => setSelectedVideo(null)}
-              className="absolute -top-12 right-0 text-white text-2xl font-bold hover:text-blue-400 transition-colors z-10"
+              className="absolute -top-8 right-0 text-white text-xl font-bold hover:text-blue-400 transition-colors z-10"
             >
               ✕ Close
             </button>
@@ -185,13 +203,13 @@ const VideoShowcase = ({ sectionRef }) => {
                 src={selectedVideo.videoUrl}
                 controls
                 autoPlay
-                className="w-full max-h-[80vh]"
+                className="max-w-[90vw] max-h-[85vh]"
                 onClick={(e) => e.stopPropagation()}
               />
             </div>
-            <div className="mt-4 text-white" onClick={(e) => e.stopPropagation()}>
-              <h3 className="text-2xl font-bold mb-2">{selectedVideo.title}</h3>
-              <p className="text-gray-300">{selectedVideo.description}</p>
+            <div className="mt-3 text-white" onClick={(e) => e.stopPropagation()}>
+              <h3 className="text-lg font-bold mb-1">{selectedVideo.title}</h3>
+              <p className="text-gray-300 text-sm">{selectedVideo.description}</p>
             </div>
           </div>
         </div>
