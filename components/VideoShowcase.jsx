@@ -81,18 +81,12 @@ const VideoShowcase = ({ sectionRef }) => {
       video.src = selectedVideo.videoUrl
       video.controls = true
       video.autoplay = true
-      video.style.position = 'fixed'
-      video.style.top = '0'
-      video.style.left = '0'
-      video.style.width = '100%'
-      video.style.height = '100%'
-      video.style.zIndex = '99999'
-      video.style.backgroundColor = 'black'
-      video.style.objectFit = 'contain'
+      video.playsInline = true
 
       const handleFullscreenChange = () => {
         if (!document.fullscreenElement && !document.webkitFullscreenElement) {
           video.pause()
+          video.currentTime = 0
           video.remove()
           setSelectedVideo(null)
           document.removeEventListener('fullscreenchange', handleFullscreenChange)
@@ -100,24 +94,33 @@ const VideoShowcase = ({ sectionRef }) => {
         }
       }
 
-      document.addEventListener('fullscreenchange', handleFullscreenChange)
-      document.addEventListener('webkitfullscreenchange', handleFullscreenChange)
+      video.addEventListener('fullscreenchange', handleFullscreenChange)
+      video.addEventListener('webkitfullscreenchange', handleFullscreenChange)
 
       document.body.appendChild(video)
 
-      const requestFullscreen = () => {
-        video.requestFullscreen?.() || video.webkitRequestFullscreen?.()
+      const playAndFullscreen = async () => {
+        try {
+          await video.play()
+          if (video.requestFullscreen) {
+            await video.requestFullscreen()
+          } else if (video.webkitEnterFullscreen) {
+            video.webkitEnterFullscreen()
+          }
+        } catch (e) {
+          console.error('Fullscreen failed:', e)
+        }
       }
 
-      requestFullscreen()
+      playAndFullscreen()
 
       return () => {
         video.pause()
         if (document.body.contains(video)) {
           video.remove()
         }
-        document.removeEventListener('fullscreenchange', handleFullscreenChange)
-        document.removeEventListener('webkitfullscreenchange', handleFullscreenChange)
+        video.removeEventListener('fullscreenchange', handleFullscreenChange)
+        video.removeEventListener('webkitfullscreenchange', handleFullscreenChange)
       }
     }
   }, [selectedVideo, isMobile])
