@@ -23,7 +23,7 @@ function Hero({ workRef, contactRef }) {
               fontWeight: 400,
               fontStyle: "normal",
             }}
-            className="text-5xl md:text-6xl font-normal mb-4 text-blue-600"
+            className="text-5xl md:text-6xl font-normal mb-4 mt-8 md:mt-12 text-blue-600"
           >
             Hi, I'm Muhammad Affan
           </h1>
