@@ -28,7 +28,7 @@ function AiWebAppsSection({ sectionRef }) {
       "A full-featured fashion e-commerce platform with AI-powered virtual try-on and computer vision-based body measurement estimation.",
     tech: ["React", "Node.js", "Computer Vision", "AI"],
     image: "/assets/splendor.jpg",
-    link: "https://splendor-orpin.vercel.app/"
+    link: "https://splendor-store.vercel.app/"
   },
 
   {
