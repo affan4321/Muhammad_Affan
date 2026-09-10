@@ -18,9 +18,7 @@ export default function Contact() {
         <span className="eyebrow">The close</span>
         <h2 className="display mt-4 max-w-4xl text-[12vw] leading-[0.86] md:text-[6vw]">
           <RevealWords text="Something" />{' '}
-          <span className="merge-text">
-            <RevealWords text="broken?" />
-          </span>
+          <RevealWords text="broken?" wordClassName="merge-text" />
         </h2>
 
         <div className="mt-14 grid gap-px border border-bone/12 bg-bone/12 lg:grid-cols-2">

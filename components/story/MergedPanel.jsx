@@ -15,7 +15,10 @@ export default function MergedPanel({ act }) {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.5, ease: EASE }}
-      className="flex h-full w-full flex-col justify-center px-6 py-20 md:px-12 lg:px-20"
+      // pt clears the fixed nav on mobile; the rest of the scale-down below
+      // keeps the content inside one small-viewport height so centring cannot
+      // push the headline up underneath it.
+      className="flex h-full w-full flex-col justify-center px-6 pb-14 pt-24 md:px-12 md:py-20 lg:px-20"
       style={{
         backgroundImage:
           'linear-gradient(115deg, rgb(var(--c-rail-cold)) 0%, rgb(var(--c-ink-2)) 50%, rgb(var(--c-rail-warm)) 100%)',
@@ -29,7 +32,7 @@ export default function MergedPanel({ act }) {
           </span>
         </div>
 
-        <h2 className="display text-[clamp(2.4rem,7vw,7.5rem)] text-bone">
+        <h2 className="display text-[clamp(1.85rem,7vw,7.5rem)] text-bone">
           {act.lines.map((line, i) => (
             <span key={line} className="block overflow-hidden pb-[0.06em]">
               <motion.span
@@ -58,7 +61,7 @@ export default function MergedPanel({ act }) {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.35, ease: EASE }}
-          className="mt-8 max-w-2xl border-t border-bone/12 pt-6 text-sm leading-relaxed text-muted md:text-base"
+          className="mt-5 max-w-2xl border-t border-bone/12 pt-4 text-[13px] leading-relaxed text-muted md:mt-8 md:pt-6 md:text-base"
         >
           {act.body}
         </motion.p>
@@ -68,7 +71,7 @@ export default function MergedPanel({ act }) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.5, ease: EASE }}
-            className="mt-10 grid gap-px overflow-hidden border border-bone/12 bg-bone/12 md:grid-cols-3"
+            className="mt-6 grid gap-px overflow-hidden border border-bone/12 bg-bone/12 md:mt-10 md:grid-cols-3"
           >
             {act.proof.map((p) => {
               const Tag = p.href ? 'a' : 'div'
@@ -78,15 +81,17 @@ export default function MergedPanel({ act }) {
                     {...(p.href
                       ? { href: p.href, target: '_blank', rel: 'noopener noreferrer' }
                       : {})}
-                    className={`block h-full p-6 transition-colors ${
+                    className={`block h-full p-4 transition-colors md:p-6 ${
                       p.href ? 'hover:bg-slate/60' : ''
                     }`}
                   >
-                    <h3 className="font-mono text-xs uppercase tracking-[0.16em] text-sky">
+                    <h3 className="font-mono text-[11px] uppercase tracking-[0.16em] text-sky md:text-xs">
                       {p.name}
                       {p.href && <span aria-hidden> ↗</span>}
                     </h3>
-                    <p className="mt-3 text-[13px] leading-relaxed text-muted">{p.note}</p>
+                    <p className="mt-2 text-xs leading-relaxed text-muted md:mt-3 md:text-[13px]">
+                      {p.note}
+                    </p>
                   </Tag>
                 </li>
               )

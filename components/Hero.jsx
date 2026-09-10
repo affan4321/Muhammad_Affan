@@ -22,15 +22,20 @@ export default function Hero() {
       id="top"
       className="grain relative flex min-h-[100svh] items-center overflow-hidden px-5 pb-16 pt-28 md:px-10 md:pt-32"
     >
+      {/*
+        A 736px box at blur-150px makes Safari allocate a very large offscreen
+        buffer, and two of them on first paint is enough to get the tab killed
+        and reloaded on iOS. Mobile gets a smaller radius on a smaller box.
+      */}
       <motion.div
         aria-hidden
         style={{ y: glowY }}
-        className="pointer-events-none absolute -top-64 left-1/2 h-[46rem] w-[46rem] -translate-x-1/2 rounded-full bg-signal/10 blur-[150px]"
+        className="pointer-events-none absolute -top-64 left-1/2 h-[24rem] w-[24rem] -translate-x-1/2 rounded-full bg-signal/10 blur-[70px] md:h-[46rem] md:w-[46rem] md:blur-[150px]"
       />
       <motion.div
         aria-hidden
         style={{ y: glowY }}
-        className="pointer-events-none absolute -bottom-72 right-0 h-[34rem] w-[34rem] rounded-full bg-ember/10 blur-[150px]"
+        className="pointer-events-none absolute -bottom-72 right-0 h-[18rem] w-[18rem] rounded-full bg-ember/10 blur-[70px] md:h-[34rem] md:w-[34rem] md:blur-[150px]"
       />
 
       <motion.div style={{ y, opacity }} className="mx-auto w-full max-w-stage">
@@ -42,9 +47,7 @@ export default function Hero() {
         <h1 className="display mt-7 text-[15vw] leading-[0.84] md:text-[10vw]">
           <RevealWords text="Muhammad" />
           <br />
-          <span className="merge-text">
-            <RevealWords text="Affan" />
-          </span>
+          <RevealWords text="Affan" wordClassName="merge-text" />
         </h1>
 
         <Reveal delay={0.35}>

@@ -97,10 +97,17 @@
     -webkit-text-stroke: 1px rgb(var(--c-muted));
   }
 
+  /*
+   * Apply to an inline-block box, never to a bare inline wrapper — see the note
+   * on RevealWords. `-webkit-text-fill-color` is required on iOS; `color` alone
+   * is not reliably honoured there.
+   */
   .merge-text {
+    display: inline-block;
     background-image: var(--gradient-merge);
     -webkit-background-clip: text;
     background-clip: text;
+    -webkit-text-fill-color: transparent;
     color: transparent;
   }
 

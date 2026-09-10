@@ -19,7 +19,17 @@ export default function RailPanel({ act, side }) {
   if (!content || act.merged) return null
 
   return (
-    <div className="absolute inset-0 flex flex-col justify-center px-5 py-16 md:px-10 lg:px-14">
+    /*
+     * Stacked on mobile, the problem rail is the top rail and the fixed nav
+     * overlaps it. Centred content in a 222px rail lands ~33px down, i.e. under
+     * a 61px navbar — so the top rail gets a heavier top pad to push its centre
+     * clear. On md+ the rails are side by side and neither is affected.
+     */
+    <div
+      className={`absolute inset-0 flex flex-col justify-center px-5 md:px-10 lg:px-14 ${
+        isProblem ? 'pb-8 pt-28 md:py-16' : 'py-10 md:py-16'
+      }`}
+    >
       <AnimatePresence mode="wait">
         <motion.div
           key={`${act.id}-${side}`}

@@ -64,25 +64,52 @@ export default function StoryRails() {
   const act = ACTS[index]
   const merged = !!act.merged
 
-  // Reduced motion gets the same layout without the interpolation: rails jump to
-  // the current act's share and let a short CSS transition carry the change.
-  //
+  // Animating a percentage width/height is a layout property, so the smooth
+  // version recalculates layout for both rails every frame. That is fine on a
+  // desktop GPU and visibly janky on a phone, so mobile (and anyone asking for
+  // reduced motion) gets discrete per-act sizing with a cheap CSS transition
+  // instead. The divider still moves between acts, just not per frame.
+  const discrete = reduce || !isWide
+
+  // Stacked, the share becomes a height. The desktop end-state of 26% is only
+  // ~220px on a phone, which is too short to hold the problem copy clear of the
+  // fixed nav — so mobile gets a floor. The rail still shrinks act to act, just
+  // never below something readable.
+  const MIN_STACKED_SHARE = 34
+  const staticWidth = isWide
+    ? widthOf(act)
+    : Math.max(MIN_STACKED_SHARE, widthOf(act))
+
   // Both axes are always written. Setting only the active one leaves the other
   // frozen at whatever it held before the breakpoint flipped, which produced a
   // stale `width: 50%` sitting underneath the stacked layout.
-  const staticWidth = widthOf(act)
   const railStyle = (share) => {
-    const size = reduce ? `${share}%` : share
+    const size = discrete ? `${share}%` : share
     return isWide
-      ? { width: size, height: '100%', ...(reduce && { transition: 'width 300ms ease' }) }
-      : { width: '100%', height: size, ...(reduce && { transition: 'height 300ms ease' }) }
+      ? { width: size, height: '100%', ...(discrete && { transition: 'width 420ms ease' }) }
+      : { width: '100%', height: size, ...(discrete && { transition: 'height 420ms ease' }) }
   }
 
-  const problemStyle = railStyle(reduce ? staticWidth : problemSize)
-  const systemStyle = railStyle(reduce ? 100 - staticWidth : systemSize)
+  const problemStyle = railStyle(discrete ? staticWidth : problemSize)
+  const systemStyle = railStyle(discrete ? 100 - staticWidth : systemSize)
+
+  const dividerStyle = discrete
+    ? {
+        ...(isWide ? { left: `${staticWidth}%` } : { top: `${staticWidth}%` }),
+        transition: `${isWide ? 'left' : 'top'} 420ms ease`,
+      }
+    : isWide
+      ? { left: dividerAt }
+      : { top: dividerAt }
 
   return (
-    <div ref={ref} style={{ height: `${N * 100}vh` }} className="relative">
+    /*
+     * svh, not vh: on iOS `100vh` is the toolbar-expanded height, so the pinned
+     * frame is taller than what you can actually see and its centred content
+     * drifts up under the fixed nav. dvh would be worse — the container would
+     * resize as the toolbar collapses and the scroll position would jump.
+     */
+    <div ref={ref} style={{ height: `${N * 100}svh` }} className="relative">
       {/* Anchor targets so the nav can jump to an act that has no DOM section. */}
       {ACTS.map((a, i) => (
         <span
@@ -90,11 +117,11 @@ export default function StoryRails() {
           id={`act-${a.id}`}
           aria-hidden
           className="absolute left-0 w-px"
-          style={{ top: `${((i + 0.5) / N) * (N - 1) * 100}vh`, height: '1px' }}
+          style={{ top: `${((i + 0.5) / N) * (N - 1) * 100}svh`, height: '1px' }}
         />
       ))}
 
-      <div className="sticky top-0 h-screen overflow-hidden grain">
+      <div className="sticky top-0 h-[100svh] overflow-hidden grain">
         {/* Problem left, system right. Below md they stack and the share drives height. */}
         <motion.div
           className="absolute inset-0 flex flex-col md:flex-row"
@@ -112,10 +139,7 @@ export default function StoryRails() {
         <motion.div
           aria-hidden
           className="absolute left-0 right-0 h-px bg-bone/20 md:left-auto md:right-auto md:top-0 md:bottom-0 md:h-auto md:w-px"
-          style={{
-            opacity: railsOut,
-            ...(isWide ? { left: dividerAt } : { top: dividerAt }),
-          }}
+          style={{ opacity: railsOut, ...dividerStyle }}
         >
           <span className="absolute left-1/2 -top-[2.5px] h-1.5 w-1.5 -translate-x-1/2 rounded-full bg-sky md:left-auto md:-left-[2.5px] md:top-1/2 md:-translate-x-0 md:-translate-y-1/2" />
         </motion.div>
