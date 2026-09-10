@@ -1,54 +1,68 @@
-import React from 'react';
-import ContactCard from './ContactCard';
-import ContactForm from './ContactForm';
-import { Reveal } from './Reveal';
+'use client'
 
+import ContactForm from './ContactForm'
+import { CONTACT } from '../utils/story'
+import { Reveal, RevealWords } from './Reveal'
 
-function Contact() {
+const CHANNELS = [
+  { label: 'Email', value: CONTACT.email, href: `mailto:${CONTACT.email}` },
+  { label: 'LinkedIn', value: 'sheikhmuhammadaffan', href: CONTACT.linkedin },
+  { label: 'GitHub', value: 'affan4321', href: CONTACT.github },
+  { label: 'WhatsApp', value: CONTACT.whatsappLabel, href: CONTACT.whatsapp },
+]
+
+export default function Contact() {
   return (
-    <div className="py-20 bg-gradient-to-b from-white to-purple-50">
-        <div className="container mx-auto px-4">
+    <section id="contact" className="relative border-t border-bone/12 py-24 md:py-32">
+      <div className="mx-auto max-w-stage px-5 md:px-10">
+        <span className="eyebrow">The close</span>
+        <h2 className="display mt-4 max-w-4xl text-[12vw] leading-[0.86] md:text-[6vw]">
+          <RevealWords text="Something" />{' '}
+          <span className="merge-text">
+            <RevealWords text="broken?" />
+          </span>
+        </h2>
+
+        <div className="mt-14 grid gap-px border border-bone/12 bg-bone/12 lg:grid-cols-2">
+          <div className="bg-ink p-6 md:p-10">
             <Reveal>
-                <div className="text-center mb-12">
-                    <h5 className="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Contact Me</h5>
-                    <p className="text-gray-600 max-w-2xl mx-auto">Feel free to reach out for collaborations or just a friendly hello</p>
-                </div>
+              <p className="max-w-md text-sm leading-relaxed text-muted md:text-base">
+                Pick whichever channel you actually check. I answer email and
+                WhatsApp fastest, usually the same day.
+              </p>
             </Reveal>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <Reveal delay={0.2}>
-                    <div className="space-y-4">
-                        <ContactCard
-                            iconURL="/assets/Contact/email.png"
-                            text="affan4321@gmail.com"
-                            url="mailto:affan4321@gmail.com"
-                        />
-                        <ContactCard
-                            iconURL="/assets/Contact/linkedIn.png"
-                            text="sheikhmuhammadaffan"
-                            url="https://www.linkedin.com/in/sheikhmuhammadaffan"
-                        />
-                        <ContactCard
-                            iconURL="/assets/Contact/github.png"
-                            text="affan4321"
-                            url="https://github.com/affan4321"
-                        />
-                        <ContactCard
-                            iconURL="/assets/Contact/whatsapp.png"
-                            text="+92 3144320292"
-                            url="https://wa.me/+923144320292"
-                        />
-                    </div>
-                </Reveal>
-                <Reveal delay={0.4}>
-                    <div>
-                        <ContactForm />
-                    </div>
-                </Reveal>
-            </div>
+            <ul className="mt-9 divide-y divide-bone/10 border-t border-bone/10">
+              {CHANNELS.map((c, i) => (
+                <li key={c.label}>
+                  <Reveal delay={0.06 * i}>
+                    <a
+                      href={c.href}
+                      target={c.href.startsWith('mailto:') ? undefined : '_blank'}
+                      rel="noopener noreferrer"
+                      className="group flex items-center justify-between gap-4 py-5 transition-colors"
+                    >
+                      <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted">
+                        {c.label}
+                      </span>
+                      <span className="flex items-center gap-3 text-sm text-bone transition-colors group-hover:text-sky md:text-base">
+                        {c.value}
+                        <span aria-hidden className="font-mono text-xs text-muted transition-colors group-hover:text-sky">
+                          ↗
+                        </span>
+                      </span>
+                    </a>
+                  </Reveal>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="bg-ink p-6 md:p-10">
+            <ContactForm />
+          </div>
         </div>
-    </div>
+      </div>
+    </section>
   )
 }
-
-export default Contact

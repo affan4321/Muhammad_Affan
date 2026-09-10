@@ -1,4 +1,5 @@
-import React from 'react'
+'use client'
+
 import { motion } from 'framer-motion'
 
 export function Reveal({ children, delay = 0, y = 40, className }) {
@@ -31,7 +32,7 @@ export function RevealWords({ text, className }) {
             transition={{ duration: 0.9, delay: i * 0.06, ease: [0.22, 1, 0.36, 1] }}
           >
             {word}
-            {'\u00A0'}
+            {' '}
           </motion.span>
         </span>
       ))}

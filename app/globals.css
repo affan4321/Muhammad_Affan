@@ -2,6 +2,159 @@
 @tailwind components;
 @tailwind utilities;
 
-html {
-  scroll-behavior: smooth;
+/*
+ * Muhammad Affan — design system.
+ * Every colour here is sampled from public/assets/latestFace.svg (the logo portrait):
+ * charcoal-navy hair, blue blazer, sky-blue tie, warm skin, white shirt.
+ *
+ * The site argues one thesis: every project starts as a human mess (warm) and
+ * ends as an engineered system (cold). The palette carries that, and the two
+ * converge at the close. Never hardcode colour in a component — add a token here.
+ */
+
+@layer base {
+  :root {
+    /* channel triplets so Tailwind opacity modifiers work: bg-signal/20 */
+    --c-ink: 18 21 31;
+    --c-ink-2: 26 30 43;
+    --c-slate: 43 49 67;
+    --c-bone: 241 237 232;
+    --c-muted: 138 144 160;
+
+    --c-signal: 43 143 224;
+    --c-sky: 100 175 210;
+    --c-ember: 201 123 90;
+
+    --c-rail-cold: 16 24 35;
+    --c-rail-warm: 27 21 18;
+
+    --gradient-merge: linear-gradient(100deg, rgb(43 143 224), rgb(201 123 90));
+    --shadow-lift: 0 40px 120px -40px rgb(0 0 0 / 0.9);
+    --shadow-signal: 0 24px 80px -24px rgb(43 143 224 / 0.45);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    /* `clip`, not `hidden`: `hidden` turns the element into a scroll container,
+     * which makes framer-motion's useScroll resolve offsets against <body>
+     * instead of the viewport and silently breaks every scroll animation. */
+    overflow-x: clip;
+  }
+
+  body {
+    /* Deliberately NOT `position: relative`. framer-motion logs a "container has
+     * a non-static position" warning without it, but adding it makes useScroll
+     * resolve offsets against <body> and freezes scrollYProgress at 0 — every
+     * act stalls on 01. The warning is cosmetic; the freeze is not. */
+    background-color: rgb(var(--c-ink));
+    color: rgb(var(--c-bone));
+    font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+    overflow-x: clip;
+  }
+
+  ::selection {
+    background: rgb(var(--c-signal));
+    color: rgb(var(--c-bone));
+  }
+
+  ::-webkit-scrollbar {
+    width: 9px;
+  }
+  ::-webkit-scrollbar-track {
+    background: rgb(var(--c-ink));
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgb(var(--c-slate));
+    border-radius: 99px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgb(var(--c-signal));
+  }
+}
+
+@layer utilities {
+  /* Heavy condensed caps — the problem rail's voice. */
+  .display {
+    font-family: var(--font-display), ui-sans-serif, system-ui, sans-serif;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 0.9;
+    text-transform: uppercase;
+  }
+
+  /* Small tracked-out label — used to number and name every act. */
+  .eyebrow {
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: rgb(var(--c-muted));
+  }
+
+  .text-stroke {
+    color: transparent;
+    -webkit-text-stroke: 1px rgb(var(--c-muted));
+  }
+
+  .merge-text {
+    background-image: var(--gradient-merge);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .hairline {
+    border-top: 1px solid rgb(var(--c-bone) / 0.12);
+  }
+
+  /*
+   * Film grain over dark panels so flat fills don't read as plastic.
+   *
+   * Deliberately does NOT set `position: relative`. It used to, and because this
+   * lands in the same @layer as Tailwind's utilities but later in source order,
+   * it silently beat `.sticky` on `<div class="sticky ... grain">` — the story
+   * frame computed to `position: relative` and never pinned, so every act after
+   * the first scrolled straight past. Any element using `grain` must supply its
+   * own positioning (`relative`, `sticky`, `absolute`) for the ::after overlay.
+   */
+  .grain::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.055;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+}
+
+/* react-responsive-modal overrides so the success dialog matches the site. */
+.custom-overlay {
+  background: rgb(var(--c-ink) / 0.88) !important;
+  backdrop-filter: blur(6px);
+}
+.custom-modal {
+  background: rgb(var(--c-ink-2)) !important;
+  border: 1px solid rgb(var(--c-bone) / 0.12);
+  border-radius: 4px;
+  color: rgb(var(--c-bone));
+  box-shadow: var(--shadow-lift);
+}
+
+/*
+ * Motion is decoration, never information. Anyone who asks for less gets a static
+ * page: rails snap between acts instead of sliding, nothing parallaxes.
+ */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

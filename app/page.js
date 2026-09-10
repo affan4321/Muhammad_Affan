@@ -1,45 +1,30 @@
-'use client'
-
 import Navbar from '../components/Navbar'
 import Hero from '../components/Hero'
+import StoryRails from '../components/story/StoryRails'
+import ProofGrid from '../components/ProofGrid'
 import Skills from '../components/Skills'
 import WorkExperience from '../components/WorkExperience'
 import Contact from '../components/Contact'
-import WorkSection from '../components/WorkSection'
-import AiWebAppsSection from '../components/AiWebAppsSection'
 import Footer from '../components/Footer'
-import { useRef } from 'react'
 
+/*
+ * Cover, then six sticky acts, then the evidence. Sections after the story are
+ * ordinary scrolling sections on purpose — the argument is already made by then,
+ * and a recruiter needs to be able to skim.
+ */
 export default function Home() {
-  const heroRef = useRef(null)
-  const skillsRef = useRef(null)
-  const workExperienceRef = useRef(null)
-  const contactRef = useRef(null)
-  const workRef = useRef(null)
-  const aiWebAppsRef = useRef(null)
-
   return (
     <>
-      <Navbar heroRef={heroRef} skillsRef={skillsRef} workExperienceRef={workExperienceRef} contactRef={contactRef} workRef={workRef} />
-      <section ref={heroRef} id="home">
-        <Hero workRef={workRef} contactRef={contactRef} />
-      </section>
-      <section ref={skillsRef} id="skillset">
+      <Navbar />
+      <main>
+        <Hero />
+        <StoryRails />
+        <ProofGrid />
         <Skills />
-      </section>
-      <section ref={workExperienceRef} id="experience">
         <WorkExperience />
-      </section>
-      <section ref={workRef} id="work">
-        <WorkSection aiWebAppsRef={aiWebAppsRef} />
-      </section>
-      <section ref={aiWebAppsRef} id="ai-web-apps">
-        <AiWebAppsSection sectionRef={aiWebAppsRef} />
-      </section>
-      <section ref={contactRef} id="contact">
         <Contact />
-      </section>
-      <Footer/>
+      </main>
+      <Footer />
     </>
   )
 }

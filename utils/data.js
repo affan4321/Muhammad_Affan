@@ -10,29 +10,6 @@ export const SKILLS = [
       ]
     },
     {
-      title: "Creative Storytelling",
-      icons: "creative-storytelling.png",
-      skills: [
-          { skill: "Storyboarding", percentage: "85%" },
-          { skill: "Scriptwriting", percentage: "85%" },
-          { skill: "Visual Editing", percentage: "90%" },
-          { skill: "Audio Mixing", percentage: "75%" }
-      ]
-    },
-    {
-      title: "Creative Production",
-      icons: "creative-production.png",
-      skills: [
-        { skill: "Adobe Premiere Pro", percentage: "85%" },
-        { skill: "After Effects", percentage: "75%" },
-        { skill: "Illustrator", percentage: "75%" },
-        { skill: "Photoshop", percentage: "70%" },
-        { skill: "CapCut", percentage: "75%" },
-        { skill: "Canva", percentage: "80%" },
-
-      ]
-    },
-    {
       title: "Cloud/DevOps/Automation",
       icons: "clouddevops.png",
       skills: [
@@ -81,12 +58,12 @@ export const WORK_EXPERIENCE = [
         ]
       },
       {
-        name: "AI Automation & Video Generation Pipelines (n8n)",
+        name: "AI Automation & Generative Pipelines (n8n)",
         responsibilities: [
           "Designed and implemented end-to-end AI automation workflows using n8n, integrating external AI services and custom backends",
-          "Built automated AI video generation pipelines using Kie.ai's models like Google Veo, OpenAI Sora, and many more via API-driven orchestration",
-          "Built ComfyUI-based video generation, including paid hosted models and experimental local pipelines",
-          "Explored local ComfyUI training and pipeline setup, gaining hands-on understanding of diffusion workflows, model constraints, and GPU limitations"
+          "Built API-driven orchestration over hosted generative models including Google Veo, OpenAI Sora and the wider Kie.ai catalogue",
+          "Stood up ComfyUI-based generation pipelines across both paid hosted models and experimental local inference",
+          "Ran local ComfyUI training and pipeline setup, working through diffusion workflows, model constraints and GPU limitations firsthand"
         ]
       },
       {
@@ -129,4 +106,93 @@ export const WORK_EXPERIENCE = [
       "Fixed bugs in backend flow in related pages"
     ],
   }
+]
+
+/*
+ * `tag` groups each project by the engineering capability it demonstrates, and
+ * drives the accent colour in THE PROOF grid.
+ */
+export const PROJECTS = [
+  {
+    title: "Splendor",
+    subtitle: "AI-powered fashion e-commerce",
+    tag: "Vision",
+    description:
+      "A fashion storefront with AI virtual try-on and computer-vision body measurement, so shoppers pick a size without guessing.",
+    tech: ["React", "Node.js", "Computer Vision"],
+    image: "/assets/splendor.jpg",
+    link: "https://splendor-store.vercel.app/",
+  },
+  {
+    title: "AI Voice Assistant",
+    subtitle: "Real-time conversational agents",
+    tag: "Voice",
+    description:
+      "Configurable voice agents holding natural conversations over live audio, with FAQ grounding and handoff to a human.",
+    tech: ["React", "LiveKit", "Voice Agents"],
+    image: "/assets/voice-agent.jpg",
+    link: "https://voice-agent-livekit.vercel.app/",
+  },
+  {
+    title: "DisasterShield",
+    subtitle: "Disaster recovery platform",
+    tag: "Platform",
+    description:
+      "Connects homeowners, contractors and insurers after a disaster — matching, FNOL claim processing, payments and documents.",
+    tech: ["React", "Computer Vision", "Payments"],
+    image: "/assets/disaster-shield.jpg",
+    link: "https://disaster-shield.vercel.app/",
+  },
+  {
+    title: "Stories We Tell",
+    subtitle: "Conversational LLM platform",
+    tag: "LLM",
+    description:
+      "Extracts structured entities from a free-form conversation and streams the result back live, with multi-user sessions and cross-device persistence.",
+    tech: ["React", "LLM", "Streaming", "Auth"],
+    image: "/assets/stories-we-tell.jpg",
+    link: "https://stories-we-tell.vercel.app/chat",
+  },
+  {
+    title: "ClipSmith Studios",
+    subtitle: "Agency site with live Drive CDN",
+    tag: "Web",
+    description:
+      "A scroll-driven agency site whose entire work grid is generated from one Google Drive folder — service-account auth, folder-to-category mapping and direct CDN delivery with no proxy.",
+    tech: ["TanStack Start", "React 19", "Drive API", "Tailwind v4"],
+    // A wide logo rather than a screenshot, so it must letterbox instead of crop.
+    image: "/assets/clipsmith.png",
+    imageFit: "contain",
+    link: "https://clipsmithstudios.vercel.app/",
+  },
+  {
+    title: "Dark Tunnel",
+    subtitle: "Interactive 3D portfolio",
+    tag: "3D",
+    description:
+      "An explorable tunnel where projects hide down branching paths — procedural geometry, physics, positional audio and a graphics settings panel.",
+    tech: ["Next.js", "Three.js", "GSAP", "Zustand"],
+    image: "/assets/haunted.png",
+    link: "https://game.smaffan.com/",
+  },
+  {
+    title: "Abdullah Chughtai",
+    subtitle: "Client portfolio build",
+    tag: "Web",
+    description:
+      "A scroll-choreographed portfolio built to a client brief — WebGL transitions, a media-heavy grid, and load behaviour tuned so none of it stutters.",
+    tech: ["React", "WebGL", "Motion"],
+    image: "/assets/abdullah-chughtai.jpg",
+    link: "https://abdullahchughtai.vercel.app/",
+  },
+  {
+    title: "Motion Showcase",
+    subtitle: "Streaming media portfolio",
+    tag: "Web",
+    description:
+      "A media-heavy showcase built around lazy-loaded streaming, generated poster frames and a filterable grid — the delivery problem, not the footage.",
+    tech: ["React", "Streaming", "Lazy loading"],
+    image: "/assets/video-portfolio.jpg",
+    link: "https://video.smaffan.com/",
+  },
 ]

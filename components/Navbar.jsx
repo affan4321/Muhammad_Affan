@@ -1,119 +1,108 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+'use client'
 
-const Navbar = ({ heroRef, skillsRef, workExperienceRef, contactRef, workRef }) => {
-  const [showMenu, setShowMenu] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
+import { useEffect, useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+
+const LINKS = [
+  { label: 'Story', href: '#act-hook' },
+  { label: 'Work', href: '#work' },
+  { label: 'Skills', href: '#skills' },
+  { label: 'Experience', href: '#experience' },
+  { label: 'Contact', href: '#contact' },
+]
+
+export default function Navbar() {
+  const [open, setOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 40);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+    const onScroll = () => setScrolled(window.scrollY > 40)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
-  const handleHamburgerClick = () => {
-    setShowMenu(prevState => !prevState);
-  };
-
-  const handleLinkClick = (ref) => {
-    ref.current.scrollIntoView({ behavior: 'smooth' });
-    if (showMenu) setShowMenu(false);
-  };
+  // A locked body behind an open sheet stops the story scrolling underneath it.
+  useEffect(() => {
+    document.body.style.overflow = open ? 'hidden' : ''
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [open])
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'bg-white/90 backdrop-blur-md shadow-lg py-3' : 'bg-transparent py-4'}`}>
-      <div className="container mx-auto px-4 flex justify-between items-center">
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5 }}
-          className="flex items-center gap-2"
-        >
-          <img src="/assets/latestFace.svg" alt="Logo" className="w-10 h-10 object-contain" />
-          <span className="text-xl font-bold text-[#2671b3] hidden sm:block">
-            Muhammad Affan
+    <nav
+      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
+        scrolled ? 'border-b border-bone/10 bg-ink/80 py-3 backdrop-blur-md' : 'py-5'
+      }`}
+    >
+      <div className="mx-auto flex max-w-stage items-center justify-between px-5 md:px-10">
+        <a href="#top" className="flex items-center gap-3" onClick={() => setOpen(false)}>
+          <img
+            src="/assets/latestFace.svg"
+            alt=""
+            aria-hidden
+            className="h-9 w-9 rounded-full object-cover ring-1 ring-bone/20"
+          />
+          <span className="font-mono text-xs uppercase tracking-[0.18em] text-bone">
+            M. Affan
           </span>
-        </motion.div>
+        </a>
 
-        <svg
-          className="w-8 h-8 cursor-pointer md:hidden text-gray-700 hover:text-blue-600 transition-colors"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          onClick={handleHamburgerClick}
+        <ul className="hidden items-center gap-9 md:flex">
+          {LINKS.map((link) => (
+            <li key={link.href}>
+              <a
+                href={link.href}
+                className="group relative font-mono text-[11px] uppercase tracking-[0.18em] text-muted transition-colors hover:text-bone"
+              >
+                {link.label}
+                <span className="absolute -bottom-1.5 left-0 h-px w-0 bg-merge transition-all duration-300 group-hover:w-full" />
+              </a>
+            </li>
+          ))}
+        </ul>
+
+        <button
+          type="button"
+          aria-label={open ? 'Close menu' : 'Open menu'}
+          aria-expanded={open}
+          onClick={() => setOpen((v) => !v)}
+          className="flex h-9 w-9 items-center justify-center text-bone md:hidden"
         >
-          {showMenu ? (
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-          ) : (
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-          )}
-        </svg>
-
-        <AnimatePresence>
-          {showMenu && (
-            <motion.ul
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              className="flex flex-col absolute top-20 left-0 right-0 bg-white shadow-xl p-6 space-y-4 md:hidden"
-            >
-              <li><a className="text-gray-700 hover:text-blue-600 font-medium transition-colors relative group cursor-pointer" onClick={() => handleLinkClick(heroRef)}>
-                Home
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 transition-all group-hover:w-full"></span>
-              </a></li>
-              <li><a className="text-gray-700 hover:text-blue-600 font-medium transition-colors relative group cursor-pointer" onClick={() => handleLinkClick(skillsRef)}>
-                Skillset
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 transition-all group-hover:w-full"></span>
-              </a></li>
-              <li><a className="text-gray-700 hover:text-blue-600 font-medium transition-colors relative group cursor-pointer" onClick={() => handleLinkClick(workExperienceRef)}>
-                Experience
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 transition-all group-hover:w-full"></span>
-              </a></li>
-              <li><a className="text-gray-700 hover:text-blue-600 font-medium transition-colors relative group cursor-pointer" onClick={() => handleLinkClick(workRef)}>
-                Work
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 transition-all group-hover:w-full"></span>
-              </a></li>
-              <li><a className="text-gray-700 hover:text-blue-600 font-medium transition-colors relative group cursor-pointer" onClick={() => handleLinkClick(contactRef)}>
-                Contact Me
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 transition-all group-hover:w-full"></span>
-              </a></li>
-            </motion.ul>
-          )}
-        </AnimatePresence>
-
-        <motion.ul
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5 }}
-          className="hidden md:flex md:flex-row md:items-center md:space-x-8"
-        >
-          <li><a className="text-gray-700 hover:text-blue-600 font-medium transition-colors relative group cursor-pointer" onClick={() => handleLinkClick(heroRef)}>
-            Home
-            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 transition-all group-hover:w-full"></span>
-          </a></li>
-          <li><a className="text-gray-700 hover:text-blue-600 font-medium transition-colors relative group cursor-pointer" onClick={() => handleLinkClick(skillsRef)}>
-            Skillset
-            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 transition-all group-hover:w-full"></span>
-          </a></li>
-          <li><a className="text-gray-700 hover:text-blue-600 font-medium transition-colors relative group cursor-pointer" onClick={() => handleLinkClick(workExperienceRef)}>
-            Experience
-            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 transition-all group-hover:w-full"></span>
-          </a></li>
-          <li><a className="text-gray-700 hover:text-blue-600 font-medium transition-colors relative group cursor-pointer" onClick={() => handleLinkClick(workRef)}>
-            Work
-            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 transition-all group-hover:w-full"></span>
-          </a></li>
-          <li><a className="text-gray-700 hover:text-blue-600 font-medium transition-colors relative group cursor-pointer" onClick={() => handleLinkClick(contactRef)}>
-            Contact Me
-            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 transition-all group-hover:w-full"></span>
-          </a></li>
-        </motion.ul>
+          <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path
+              strokeLinecap="round"
+              strokeWidth={1.6}
+              d={open ? 'M6 18L18 6M6 6l12 12' : 'M4 7h16M4 12h16M4 17h16'}
+            />
+          </svg>
+        </button>
       </div>
-    </nav>
-  );
-}
 
-export default Navbar;
+      <AnimatePresence>
+        {open && (
+          <motion.ul
+            initial={{ opacity: 0, y: -12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -12 }}
+            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            className="mt-3 space-y-1 border-t border-bone/10 bg-ink/95 px-5 py-6 backdrop-blur-md md:hidden"
+          >
+            {LINKS.map((link) => (
+              <li key={link.href}>
+                <a
+                  href={link.href}
+                  onClick={() => setOpen(false)}
+                  className="block py-3 font-mono text-sm uppercase tracking-[0.18em] text-muted transition-colors hover:text-bone"
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))}
+          </motion.ul>
+        )}
+      </AnimatePresence>
+    </nav>
+  )
+}

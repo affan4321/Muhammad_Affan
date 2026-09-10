@@ -1,69 +1,94 @@
-import React, { useRef } from 'react'
-import { motion, useScroll, useTransform } from 'framer-motion'
-import { Reveal, RevealWords } from './Reveal'
+'use client'
 
-function Hero({ workRef, contactRef }) {
+import { useRef } from 'react'
+import { motion, useScroll, useTransform } from 'framer-motion'
+import { RevealWords, Reveal } from './Reveal'
+
+/*
+ * The cover. Its only job is to plant the shape of the story — something breaks,
+ * a system answers it — before the first act says it out loud. The two accent
+ * colours are the same two rails the rest of the page runs on.
+ */
+export default function Hero() {
   const ref = useRef(null)
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] })
-  const titleY = useTransform(scrollYProgress, [0, 1], [0, -100])
-  const titleOpacity = useTransform(scrollYProgress, [0, 0.6], [1, 0])
-
-  const handleViewWorkClick = () => {
-    if (workRef && workRef.current) {
-      workRef.current.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
-  const handleContactClick = () => {
-    if (contactRef && contactRef.current) {
-      contactRef.current.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
+  const y = useTransform(scrollYProgress, [0, 1], [0, -140])
+  const opacity = useTransform(scrollYProgress, [0, 0.75], [1, 0])
+  const glowY = useTransform(scrollYProgress, [0, 1], [0, 120])
 
   return (
-    <div ref={ref} className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-purple-50 relative overflow-hidden">
+    <section
+      ref={ref}
+      id="top"
+      className="grain relative flex min-h-[100svh] items-center overflow-hidden px-5 pb-16 pt-28 md:px-10 md:pt-32"
+    >
       <motion.div
         aria-hidden
-        style={{ y: useTransform(scrollYProgress, [0, 1], [0, 100]) }}
-        className="pointer-events-none absolute -top-40 left-1/2 h-[52rem] w-[52rem] -translate-x-1/2 rounded-full bg-blue-400/12 blur-[140px]"
+        style={{ y: glowY }}
+        className="pointer-events-none absolute -top-64 left-1/2 h-[46rem] w-[46rem] -translate-x-1/2 rounded-full bg-signal/10 blur-[150px]"
       />
-      <section className="container mx-auto px-4 relative z-10">
-        <motion.div style={{ y: titleY, opacity: titleOpacity }}>
-          <div className="text-center mb-12">
-            <div className="flex items-center justify-center gap-3 mb-6">
-              <span className="h-2 w-2 animate-pulse rounded-full bg-blue-600" />
-              <span className="text-sm uppercase tracking-[0.28em] text-gray-600">AI & Data Engineering</span>
-            </div>
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 text-blue-600 leading-tight">
-              <RevealWords text="Hi, I'm" />
-              <br />
-              <span className="text-purple-600">
-                <RevealWords text="Muhammad Affan" />
-              </span>
-            </h1>
-            <Reveal delay={0.3}>
-              <p className="text-xl md:text-2xl text-gray-700 font-medium mb-2">
-                AI Engineer | Data Engineer
-              </p>
-              <p className="text-lg md:text-xl text-gray-600 font-medium italic mb-8">
-                Building intelligent systems and data-driven solutions
-              </p>
-            </Reveal>
-            <Reveal delay={0.5}>
-              <div className="mt-8 flex justify-center gap-4">
-                <button onClick={handleViewWorkClick} className="bg-blue-600 text-white px-8 py-3 rounded-full font-semibold hover:bg-blue-700 transition-all transform hover:scale-105 shadow-lg cursor-pointer">
-                  View My Work
-                </button>
-                <button onClick={handleContactClick} className="border-2 border-blue-600 text-blue-600 px-8 py-3 rounded-full font-semibold hover:bg-blue-600 hover:text-white transition-all transform hover:scale-105 cursor-pointer">
-                  Contact Me
-                </button>
-              </div>
-            </Reveal>
-          </div>
-        </motion.div>
-      </section>
-    </div>
-  );
-}
+      <motion.div
+        aria-hidden
+        style={{ y: glowY }}
+        className="pointer-events-none absolute -bottom-72 right-0 h-[34rem] w-[34rem] rounded-full bg-ember/10 blur-[150px]"
+      />
 
-export default Hero
+      <motion.div style={{ y, opacity }} className="mx-auto w-full max-w-stage">
+        <div className="flex items-center gap-3">
+          <span className="h-2 w-2 animate-pulse rounded-full bg-signal" />
+          <span className="eyebrow">Portfolio — 2026</span>
+        </div>
+
+        <h1 className="display mt-7 text-[15vw] leading-[0.84] md:text-[10vw]">
+          <RevealWords text="Muhammad" />
+          <br />
+          <span className="merge-text">
+            <RevealWords text="Affan" />
+          </span>
+        </h1>
+
+        <Reveal delay={0.35}>
+          <p className="mt-6 font-mono text-sm uppercase tracking-[0.2em] md:text-base">
+            <span className="text-signal">AI Engineer</span>
+            <span className="mx-3 text-muted">/</span>
+            <span className="text-sky">Data Engineer</span>
+          </p>
+        </Reveal>
+
+        <div className="mt-10 flex flex-col gap-6 border-t border-bone/12 pt-7 md:flex-row md:items-end md:justify-between">
+          <Reveal delay={0.45}>
+            <p className="max-w-md text-base leading-relaxed text-muted md:text-lg">
+              I build systems that hold a conversation and pipelines that
+              remember it. Scroll — the next six screens make the case better
+              than a bullet list would.
+            </p>
+          </Reveal>
+
+          <Reveal delay={0.55}>
+            <div className="flex flex-wrap items-center gap-4">
+              <a
+                href="#act-proof"
+                className="inline-flex items-center gap-2 rounded-full bg-merge px-7 py-4 text-sm font-semibold uppercase tracking-[0.14em] text-ink shadow-signal transition-transform duration-300 hover:scale-[1.04]"
+              >
+                See the work
+              </a>
+              <a
+                href="#contact"
+                className="inline-flex items-center gap-2 rounded-full border border-bone/25 px-7 py-4 text-sm uppercase tracking-[0.14em] text-bone transition-colors hover:border-signal hover:text-signal"
+              >
+                Start a project
+              </a>
+            </div>
+          </Reveal>
+        </div>
+
+        <Reveal delay={0.7}>
+          <p className="mt-14 flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.24em] text-muted">
+            <span className="inline-block h-10 w-px bg-gradient-to-b from-transparent via-signal to-ember" />
+            Act 01 begins below
+          </p>
+        </Reveal>
+      </motion.div>
+    </section>
+  )
+}

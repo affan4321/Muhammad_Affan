@@ -1,35 +1,45 @@
-import React from 'react';
-import ExperienceCard from './ExperienceCard';
-import { WORK_EXPERIENCE } from '../utils/data';
-import { Reveal } from './Reveal';
+'use client'
 
-function WorkExperience() {
+import { useRef } from 'react'
+import { motion, useScroll, useTransform } from 'framer-motion'
+import ExperienceCard from './ExperienceCard'
+import { WORK_EXPERIENCE } from '../utils/data'
+import { Reveal, RevealWords } from './Reveal'
+
+export default function WorkExperience() {
+  const ref = useRef(null)
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ['start end', 'end start'],
+  })
+  // The spine fills as you read down it — the only ornament in this section.
+  const lineHeight = useTransform(scrollYProgress, [0.1, 0.85], ['0%', '100%'])
+
   return (
-    <section className="py-20 bg-gradient-to-b from-blue-50 to-white">
-        <div className="container mx-auto px-4">
-            <Reveal>
-                <div className="text-center mb-12">
-                    <h5 className="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                        Work Experience
-                    </h5>
-                    <p className="text-gray-600 max-w-2xl mx-auto">My professional journey and the roles I've taken on</p>
-                </div>
-            </Reveal>
+    <section id="experience" ref={ref} className="relative border-t border-bone/12 py-24 md:py-32">
+      <div className="mx-auto max-w-stage px-5 md:px-10">
+        <span className="eyebrow">Where the hours went</span>
+        <h2 className="display mt-4 max-w-4xl text-[11vw] leading-[0.86] md:text-[5.5vw]">
+          <RevealWords text="Three rooms," />{' '}
+          <span className="text-stroke">
+            <RevealWords text="two years." />
+          </span>
+        </h2>
 
-            <div className="max-w-8xl mx-auto space-y-6">
-                {
-                WORK_EXPERIENCE.map((item, index) => {
-                    return (
-                        <Reveal key={index} delay={index * 0.1}>
-                            <ExperienceCard details={item}/>
-                        </Reveal>
-                    )
-                })
-                }
-            </div>
+        <div className="relative mt-16 pl-7 md:pl-10">
+          <div className="absolute left-0 top-0 h-full w-px bg-bone/12">
+            <motion.div style={{ height: lineHeight }} className="w-px bg-merge" />
+          </div>
+
+          <div className="space-y-6">
+            {WORK_EXPERIENCE.map((item, i) => (
+              <Reveal key={item.title} delay={i * 0.08}>
+                <ExperienceCard details={item} index={i} />
+              </Reveal>
+            ))}
+          </div>
         </div>
+      </div>
     </section>
   )
 }
-
-export default WorkExperience
