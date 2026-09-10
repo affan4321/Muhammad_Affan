@@ -66,10 +66,9 @@ export const ACTS = [
     system: {
       eyebrow: 'The system',
       lines: ['So I built', 'the pipes.'],
-      body: 'Ingestion, transformation, warehousing, and the dashboards that turn all of it back into a decision. The layer nobody applauds and every product quietly depends on.',
-      meta: ['PostgreSQL', 'Supabase', 'MongoDB', 'n8n', 'Docker'],
-      footnote: 'Currently building this one in the open.',
-      status: 'In progress',
+      body: 'NewsLake: news ingested into MinIO, transformed through Spark bronze/silver/gold layers, orchestrated by Airflow, modeled with dbt, and served live through a Streamlit dashboard reading straight from Neon Postgres. The layer nobody applauds and every product quietly depends on.',
+      meta: ['Airflow', 'Apache Spark', 'dbt', 'MinIO', 'Neon Postgres', 'Streamlit'],
+      footnote: 'Built in the open, end to end.',
     },
   },
   {

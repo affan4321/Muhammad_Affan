@@ -195,4 +195,14 @@ export const PROJECTS = [
     image: "/assets/video-portfolio.jpg",
     link: "https://video.smaffan.com/",
   },
+  {
+    title: "NewsLake",
+    subtitle: "Containerized news data lakehouse",
+    tag: "Data",
+    description:
+      "News ingested into MinIO, transformed through Spark's bronze/silver/gold layers, orchestrated by Airflow, modeled with dbt, and served live through a Streamlit dashboard reading straight from Neon Postgres.",
+    tech: ["Airflow", "Apache Spark", "dbt", "Neon Postgres", "Streamlit"],
+    image: "/assets/newslake.jpg",
+    link: "https://github.com/affan4321/NewsLake",
+  },
 ]
