@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Reveal } from './Reveal';
 
 function AiWebAppsSection({ sectionRef }) {
   const [hoveredCard, setHoveredCard] = useState(null)
@@ -89,61 +90,64 @@ function AiWebAppsSection({ sectionRef }) {
   return (
     <section ref={sectionRef} className="py-20 bg-gradient-to-b from-purple-50 to-white">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-            AI & Web Applications
-          </h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
-            Innovative solutions powered by artificial intelligence and modern web technologies
-          </p>
-        </div>
+        <Reveal>
+          <div className="text-center mb-12">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+              AI & Web Applications
+            </h2>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              Innovative solutions powered by artificial intelligence and modern web technologies
+            </p>
+          </div>
+        </Reveal>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {projects.map((project, index) => (
-            <div
-              key={index}
-              className="bg-white rounded-2xl shadow-xl overflow-hidden cursor-pointer transform transition-all duration-100 preserve-3d"
-              style={{
-                transform: hoveredCard === index
-                  ? `perspective(1000px) rotateX(${mousePosition.x}deg) rotateY(${mousePosition.y}deg) scale(1.05)`
-                  : 'perspective(1000px) rotateX(0) rotateY(0) scale(1)',
-                transformStyle: 'preserve-3d'
-              }}
-              onMouseMove={(e) => {
-                setHoveredCard(index)
-                handleMouseMove(e, index)
-              }}
-              onMouseLeave={handleMouseLeave}
-            >
-              <a
-                href={project.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block h-full"
+            <Reveal key={index} delay={index * 0.1}>
+              <div
+                className="bg-white rounded-2xl shadow-xl overflow-hidden cursor-pointer transform transition-all duration-100 preserve-3d"
+                style={{
+                  transform: hoveredCard === index
+                    ? `perspective(1000px) rotateX(${mousePosition.x}deg) rotateY(${mousePosition.y}deg) scale(1.05)`
+                    : 'perspective(1000px) rotateX(0) rotateY(0) scale(1)',
+                  transformStyle: 'preserve-3d'
+                }}
+                onMouseMove={(e) => {
+                  setHoveredCard(index)
+                  handleMouseMove(e, index)
+                }}
+                onMouseLeave={handleMouseLeave}
               >
-                <div className="relative h-48 bg-gradient-to-br from-purple-400 to-pink-400">
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-bold text-gray-800 mb-2">{project.title}</h3>
-                  <p className="text-gray-600 text-sm mb-4">{project.description}</p>
-                  <div className="flex flex-wrap gap-2">
-                    {project.tech.map((tech, idx) => (
-                      <span
-                        key={idx}
-                        className="px-3 py-1 bg-gradient-to-r from-purple-100 to-pink-100 text-purple-800 rounded-full text-xs font-medium"
-                      >
-                        {tech}
-                      </span>
-                    ))}
+                <a
+                  href={project.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block h-full"
+                >
+                  <div className="relative h-48 bg-gradient-to-br from-purple-400 to-pink-400">
+                    <img
+                      src={project.image}
+                      alt={project.title}
+                      className="w-full h-full object-cover"
+                    />
                   </div>
-                </div>
-              </a>
-            </div>
+                  <div className="p-6">
+                    <h3 className="text-xl font-bold text-gray-800 mb-2">{project.title}</h3>
+                    <p className="text-gray-600 text-sm mb-4">{project.description}</p>
+                    <div className="flex flex-wrap gap-2">
+                      {project.tech.map((tech, idx) => (
+                        <span
+                          key={idx}
+                          className="px-3 py-1 bg-gradient-to-r from-purple-100 to-pink-100 text-purple-800 rounded-full text-xs font-medium"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </a>
+              </div>
+            </Reveal>
           ))}
         </div>
       </div>

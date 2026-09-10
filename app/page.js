@@ -5,7 +5,6 @@ import Hero from '../components/Hero'
 import Skills from '../components/Skills'
 import WorkExperience from '../components/WorkExperience'
 import Contact from '../components/Contact'
-import VideoShowcase from '../components/VideoShowcase'
 import WorkSection from '../components/WorkSection'
 import AiWebAppsSection from '../components/AiWebAppsSection'
 import Footer from '../components/Footer'
@@ -17,7 +16,6 @@ export default function Home() {
   const workExperienceRef = useRef(null)
   const contactRef = useRef(null)
   const workRef = useRef(null)
-  const videoEditingRef = useRef(null)
   const aiWebAppsRef = useRef(null)
 
   return (
@@ -33,10 +31,7 @@ export default function Home() {
         <WorkExperience />
       </section>
       <section ref={workRef} id="work">
-        <WorkSection videoEditingRef={videoEditingRef} aiWebAppsRef={aiWebAppsRef} />
-      </section>
-      <section ref={videoEditingRef} id="video-editing">
-        <VideoShowcase sectionRef={videoEditingRef} />
+        <WorkSection aiWebAppsRef={aiWebAppsRef} />
       </section>
       <section ref={aiWebAppsRef} id="ai-web-apps">
         <AiWebAppsSection sectionRef={aiWebAppsRef} />

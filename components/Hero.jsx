@@ -1,6 +1,13 @@
-import React from 'react'
+import React, { useRef } from 'react'
+import { motion, useScroll, useTransform } from 'framer-motion'
+import { Reveal, RevealWords } from './Reveal'
 
 function Hero({ workRef, contactRef }) {
+  const ref = useRef(null)
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] })
+  const titleY = useTransform(scrollYProgress, [0, 1], [0, -100])
+  const titleOpacity = useTransform(scrollYProgress, [0, 0.6], [1, 0])
+
   const handleViewWorkClick = () => {
     if (workRef && workRef.current) {
       workRef.current.scrollIntoView({ behavior: 'smooth' });
@@ -14,129 +21,47 @@ function Hero({ workRef, contactRef }) {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-purple-50 relative overflow-hidden">
+    <div ref={ref} className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-purple-50 relative overflow-hidden">
+      <motion.div
+        aria-hidden
+        style={{ y: useTransform(scrollYProgress, [0, 1], [0, 100]) }}
+        className="pointer-events-none absolute -top-40 left-1/2 h-[52rem] w-[52rem] -translate-x-1/2 rounded-full bg-blue-400/12 blur-[140px]"
+      />
       <section className="container mx-auto px-4 relative z-10">
-        <div className="text-center mb-12 animate-fade-in">
-          <h1
-            style={{
-              fontFamily: "'AlexBrush', cursive",
-              fontWeight: 400,
-              fontStyle: "normal",
-            }}
-            className="text-5xl md:text-6xl font-normal mb-4 mt-8 md:mt-12 text-blue-600"
-          >
-            Hi, I'm Muhammad Affan
-          </h1>
-          <p className="text-xl md:text-2xl text-gray-700 font-medium mb-2">
-            Creative Technologist | AI, Automation & Media Production
-          </p>
-          <p className="text-lg md:text-xl text-gray-600 font-medium italic mb-8">
-            Blending Smart Tech with bold creativity
-          </p>
-          <div className="mt-8 flex justify-center gap-4">
-            <button onClick={handleViewWorkClick} className="bg-blue-600 text-white px-8 py-3 rounded-full font-semibold hover:bg-blue-700 transition-all transform hover:scale-105 shadow-lg cursor-pointer">
-              View My Work
-            </button>
-            <button onClick={handleContactClick} className="border-2 border-blue-600 text-blue-600 px-8 py-3 rounded-full font-semibold hover:bg-blue-600 hover:text-white transition-all transform hover:scale-105 cursor-pointer">
-              Contact Me
-            </button>
-          </div>
-        </div>
-
-        <div className="flex justify-center items-center mt-16 relative w-full max-w-4xl mx-auto">
-          <div className="w-32 h-32 md:w-64 md:h-64 lg:w-80 lg:h-80 relative">
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full blur-3xl opacity-40 animate-pulse"></div>
-            <img src="/assets/coolBoy.jpg" alt="Muhammad Affan" className="w-full h-full object-cover rounded-full border-4 border-white shadow-2xl relative z-10" />
-          </div>
-
-          <div className="absolute top-2 left-3 sm:top-8 sm:-left-8 animate-float-1">
-            <div className="w-8 h-8 md:w-12 md:h-12 lg:w-14 lg:h-14 bg-white rounded-2xl shadow-lg flex items-center justify-center transform hover:scale-110 transition-transform">
-              <img src="/assets/React.png" alt="react" className="w-full h-full object-contain" />
+        <motion.div style={{ y: titleY, opacity: titleOpacity }}>
+          <div className="text-center mb-12">
+            <div className="flex items-center justify-center gap-3 mb-6">
+              <span className="h-2 w-2 animate-pulse rounded-full bg-blue-600" />
+              <span className="text-sm uppercase tracking-[0.28em] text-gray-600">AI & Data Engineering</span>
             </div>
+            <h1 className="text-5xl md:text-7xl font-bold mb-6 text-blue-600 leading-tight">
+              <RevealWords text="Hi, I'm" />
+              <br />
+              <span className="text-purple-600">
+                <RevealWords text="Muhammad Affan" />
+              </span>
+            </h1>
+            <Reveal delay={0.3}>
+              <p className="text-xl md:text-2xl text-gray-700 font-medium mb-2">
+                AI Engineer | Data Engineer
+              </p>
+              <p className="text-lg md:text-xl text-gray-600 font-medium italic mb-8">
+                Building intelligent systems and data-driven solutions
+              </p>
+            </Reveal>
+            <Reveal delay={0.5}>
+              <div className="mt-8 flex justify-center gap-4">
+                <button onClick={handleViewWorkClick} className="bg-blue-600 text-white px-8 py-3 rounded-full font-semibold hover:bg-blue-700 transition-all transform hover:scale-105 shadow-lg cursor-pointer">
+                  View My Work
+                </button>
+                <button onClick={handleContactClick} className="border-2 border-blue-600 text-blue-600 px-8 py-3 rounded-full font-semibold hover:bg-blue-600 hover:text-white transition-all transform hover:scale-105 cursor-pointer">
+                  Contact Me
+                </button>
+              </div>
+            </Reveal>
           </div>
-
-          <div className="absolute top-20 left-10 sm:top-[20rem] sm:left-[-8rem] animate-float-1">
-            <div className="w-8 h-8 md:w-12 md:h-12 lg:w-20 lg:h-20 bg-white rounded-2xl shadow-lg flex items-center justify-center transform hover:scale-110 transition-transform">
-              <img src="/assets/premiere-pro.png" alt="premiere pro" className="w-full h-full object-contain" />
-            </div>
-          </div>
-
-          <div className="absolute top-[10rem] sm:top-[15rem] left-[8rem] sm:left-[10rem] animate-float-1">
-            <div className="w-8 h-8 md:w-12 md:h-12 lg:w-14 lg:h-14 bg-white rounded-2xl shadow-lg flex items-center justify-center transform hover:scale-110 transition-transform">
-              <img src="/assets/illustrator.png" alt="illustrator" className="w-full h-full object-contain" />
-            </div>
-          </div>
-
-          <div className="absolute -top-4 sm:-top-20 sm:right-12 animate-float-2">
-            <div className="w-12 h-12 md:w-16 md:h-16 lg:w-18 lg:h-18 bg-white rounded-2xl shadow-lg flex items-center justify-center transform hover:scale-110 transition-transform">
-              <img src="/assets/css.png" alt="css" className="w-full h-full object-contain" />
-            </div>
-          </div>
-          
-          <div className="absolute top-4 right-2 sm:top-20 sm:right-18 animate-float-2">
-            <div className="w-12 h-12 md:w-16 md:h-16 lg:w-18 lg:h-18 bg-white rounded-2xl shadow-lg flex items-center justify-center transform hover:scale-110 transition-transform">
-              <img src="/assets/after-effects.png" alt="after effects" className="w-full h-full object-contain" />
-            </div>
-          </div>
-
-          <div className="absolute top-20 right-12 sm:-top-[2rem] sm:right-[20rem] animate-float-2">
-            <div className="w-12 h-12 md:w-16 md:h-16 lg:w-18 lg:h-18 bg-white rounded-2xl shadow-lg flex items-center justify-center transform hover:scale-110 transition-transform">
-              <img src="/assets/photoshop.png" alt="photoshop" className="w-full h-full object-contain" />
-            </div>
-          </div>
-
-          <div className="absolute top-40 left-10 sm:top-1/2 sm:-left-36 animate-float-3">
-            <div className="w-10 h-10 md:w-14 md:h-14 lg:w-16 lg:h-16 bg-white rounded-2xl shadow-lg flex items-center justify-center transform hover:scale-110 transition-transform">
-              <img src="/assets/HTML.png" alt="html" className="w-full h-full object-contain" />
-            </div>
-          </div>
-
-          <div className="absolute -bottom-0 right-0 sm:bottom-16 sm:right-28 animate-float-4">
-            <div className="w-9 h-9 md:w-13 md:h-13 lg:w-15 lg:h-15 bg-white rounded-2xl shadow-lg flex items-center justify-center transform hover:scale-110 transition-transform">
-              <img src="/assets/Javascript.png" alt="javascript" className="w-full h-full object-contain" />
-            </div>
-          </div>
-        </div>
+        </motion.div>
       </section>
-
-      <style jsx>{`
-        @keyframes float-1 {
-          0%, 100% { transform: translateY(0px) translateX(0px) rotate(0deg); }
-          25% { transform: translateY(-15px) translateX(10px) rotate(8deg); }
-          50% { transform: translateY(-25px) translateX(-5px) rotate(-5deg); }
-          75% { transform: translateY(-10px) translateX(8px) rotate(3deg); }
-        }
-        @keyframes float-2 {
-          0%, 100% { transform: translateY(0px) translateX(0px) rotate(0deg); }
-          25% { transform: translateY(-20px) translateX(-8px) rotate(-7deg); }
-          50% { transform: translateY(-30px) translateX(12px) rotate(6deg); }
-          75% { transform: translateY(-12px) translateX(-6px) rotate(-4deg); }
-        }
-        @keyframes float-3 {
-          0%, 100% { transform: translateY(0px) translateX(0px) rotate(0deg); }
-          25% { transform: translateY(-18px) translateX(12px) rotate(-6deg); }
-          50% { transform: translateY(-28px) translateX(-10px) rotate(9deg); }
-          75% { transform: translateY(-14px) translateX(7px) rotate(-3deg); }
-        }
-        @keyframes float-4 {
-          0%, 100% { transform: translateY(0px) translateX(0px) rotate(0deg); }
-          25% { transform: translateY(-22px) translateX(-12px) rotate(7deg); }
-          50% { transform: translateY(-32px) translateX(15px) rotate(-8deg); }
-          75% { transform: translateY(-16px) translateX(-9px) rotate(5deg); }
-        }
-        .animate-float-1 {
-          animation: float-1 4s ease-in-out infinite;
-        }
-        .animate-float-2 {
-          animation: float-2 5s ease-in-out infinite;
-        }
-        .animate-float-3 {
-          animation: float-3 4.5s ease-in-out infinite;
-        }
-        .animate-float-4 {
-          animation: float-4 5.5s ease-in-out infinite;
-        }
-      `}</style>
     </div>
   );
 }
