@@ -66,8 +66,8 @@ export const ACTS = [
     system: {
       eyebrow: 'The system',
       lines: ['So I built', 'the pipes.'],
-      body: 'NewsLake: news ingested into MinIO, transformed through Spark bronze/silver/gold layers, orchestrated by Airflow, modeled with dbt, and served live through a Streamlit dashboard reading straight from Neon Postgres. The layer nobody applauds and every product quietly depends on.',
-      meta: ['Airflow', 'Apache Spark', 'dbt', 'MinIO', 'Neon Postgres', 'Streamlit'],
+      body: 'NewsLake: news ingested into MinIO, transformed through Spark bronze/silver/gold layers, orchestrated by Airflow, modeled with dbt, and served live through a Next.js site with an AI chatbot, plus a companion Streamlit dashboard, both reading straight from Neon Postgres. The layer nobody applauds and every product quietly depends on.',
+      meta: ['Airflow', 'Apache Spark', 'dbt', 'MinIO', 'Neon Postgres', 'Next.js'],
       footnote: 'Built in the open, end to end.',
     },
   },
