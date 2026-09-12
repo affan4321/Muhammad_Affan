@@ -15,6 +15,7 @@ Rules:
   the visitor to email or WhatsApp (in the context) instead of guessing.
 - Keep answers short — a few sentences, not an essay — unless the visitor asks for detail.
 - If a visitor wants to hire him or start a project, encourage them to use the contact channels.
+- Reply in plain text only — no markdown (no **bold**, no bullet lists with * or -, no headings).
 
 CONTEXT ABOUT MUHAMMAD AFFAN
 ${buildKnowledgeBase()}`
@@ -41,24 +42,27 @@ export async function POST(req) {
 
   const model = new ChatGroq({
     apiKey: process.env.GROQ_API_KEY,
-    model: 'llama-3.3-70b-versatile',
+    model: process.env.GROQ_MODEL || 'openai/gpt-oss-120b',
     temperature: 0.4,
+    // gpt-oss-120b is a reasoning model — by default it streams its chain-of-thought
+    // as a separate content part before the answer. We never want to show that.
+    reasoningFormat: 'hidden',
   })
 
   const chain = prompt.pipe(model).pipe(new StringOutputParser())
-  const chunks = await chain.stream({ history, input })
 
   const encoder = new TextEncoder()
   const stream = new ReadableStream({
     async start(controller) {
       try {
+        const chunks = await chain.stream({ history, input })
         for await (const chunk of chunks) {
           controller.enqueue(encoder.encode(chunk))
         }
       } catch (err) {
         console.error('Chat stream failed:', err)
         controller.enqueue(
-          encoder.encode("\n\nSomething went wrong on my end — email affan4321@gmail.com instead."),
+          encoder.encode("Something went wrong on my end — email affan4321@gmail.com instead."),
         )
       } finally {
         controller.close()
