@@ -1,12 +1,14 @@
 export const SKILLS = [
     {
-      title: "AI/ML",
+      title: "AI / Data Engineering",
       icons: "aiml.png",
       skills: [
-        { skill: "OpenAI / Gemini / Claude usage", percentage: "85%" },
-        { skill: "ComfyUI", percentage: "75%" },
-        { skill: "Kie.ai Models", percentage: "70%" },
-        { skill: "Computer Vision", percentage: "70%" }
+        { skill: "LLM Integration (OpenAI, Gemini, Claude)", percentage: "85%" },
+        { skill: "Voice AI Agents (LiveKit)", percentage: "80%" },
+        { skill: "AI Agent Orchestration & Automation", percentage: "80%" },
+        { skill: "Data Pipeline Orchestration (Airflow)", percentage: "75%" },
+        { skill: "Distributed Processing (Apache Spark)", percentage: "70%" },
+        { skill: "Data Modeling (dbt)", percentage: "70%" }
       ]
     },
     {
@@ -24,10 +26,11 @@ export const SKILLS = [
       title: "Databases",
       icons: "databaseIcon.png",
       skills: [
-        { skill: "MongoDB", percentage: "70%" },
-        { skill: "MySQL", percentage: "70%" },
-        { skill: "PostgreSQL", percentage: "70%" },
+        { skill: "PostgreSQL", percentage: "80%" },
+        { skill: "Neon (Serverless Postgres)", percentage: "75%" },
         { skill: "Supabase", percentage: "90%" },
+        { skill: "MongoDB", percentage: "70%" },
+        { skill: "MySQL", percentage: "65%" },
       ]
     },
     {
