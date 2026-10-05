@@ -208,4 +208,14 @@ export const PROJECTS = [
     image: "/assets/newslake.jpg",
     link: "https://newslakeoriginal.vercel.app/",
   },
+  {
+    title: "Milo.ai",
+    subtitle: "AI meeting notetaker",
+    tag: "LLM",
+    description:
+      "A bot that joins your Google Meet calls, records and transcribes them, then writes the summary and action items — with search across every meeting and cited answers to plain-language questions. Upload a recording instead if the bot gets blocked.",
+    tech: ["Next.js", "Playwright", "Gemini", "Postgres + pgvector", "pg-boss"],
+    image: "/assets/milo.jpg",
+    link: "https://miloainotetaker.vercel.app/",
+  },
 ]
